@@ -34,14 +34,14 @@ def process(log_file, sub_process, fecha_inicial, fecha_final):
                 file.write(str(fecha_inicial) + '\n')
                 file.write(str(fecha_final) + '\n')
                 file.close()
-                sepp_model.train(datos_eventos)
+                sepp_model.train_model(datos_eventos)
             else:
                 datos_eventos = gpd.read_file('eventos_covariados.geojson')
                 file = open("fechas_entrenamiento.txt", "w")
                 file.write(str(datos_eventos.FECHA.iloc[0]) + '\n')
                 file.write(str(datos_eventos.FECHA.iloc[-1]) + '\n')
                 file.close()
-                sepp_model.train(datos_eventos)
+                sepp_model.train_model(datos_eventos)
         
     except Exception as e:
         msg_error = "No se completó función process"
