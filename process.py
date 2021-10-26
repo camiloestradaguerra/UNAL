@@ -1,6 +1,6 @@
 import sys
-from class_sepp_model12 import *
-from sepp_auxiliar_functions11 import *
+from class_sepp_model import *
+from sepp_auxiliar_functions import *
 import logging
 import argparse
 import constants_manager as c
