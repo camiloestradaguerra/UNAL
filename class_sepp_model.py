@@ -1,4 +1,3 @@
-# hola mundos
 __name__ = "Class for the SEPP Model"
 #%matplotlib inline
 import os
