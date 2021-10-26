@@ -601,7 +601,7 @@ def limpieza_datos(df):
     root_logger.addHandler(handler)
 
 
-    merged_nuse.to_csv(r'/home/unal/modelo_rinas/sepp/merged_nuse.csv',index=None)
+    merged_nuse.to_csv(r'/home/unal/modelo_rinas/UNAL/merged_nuse.csv',index=None)
 
 
     ##print('----- 1 -----')
@@ -764,7 +764,7 @@ def limpieza_datos(df):
     logging.debug('Inicia rebuild methods')
     try:
 
-        data_location = '/home/unal/modelo_rinas/sepp/merged_nuse.csv'
+        data_location = '/home/unal/modelo_rinas/UNAL/merged_nuse.csv'
         merged_nuse=pd.read_csv(data_location,delimiter=",")
 
         pd.DataFrame({"Tipo de dato":merged_nuse.dtypes.values,
@@ -822,7 +822,7 @@ def limpieza_datos(df):
 
     logging.debug('Inicia carga dataframe')
     try:
-        merged_nuse.to_csv(r'/home/unal/modelo_rinas/sepp/merged_nuse.csv',index=None)
+        merged_nuse.to_csv(r'/home/unal/modelo_rinas/UNAL/merged_nuse.csv',index=None)
 
         pd.DataFrame({"Tipo de dato":merged_nuse.dtypes.values,
                     "Celdas con valor '-'":(merged_nuse == '-').sum().values,
@@ -840,7 +840,7 @@ def limpieza_datos(df):
     logging.debug('Inicia Rebuild location through address')
     try:   
         # Rebuild location through address
-        data_location = '/home/unal/modelo_rinas/sepp/merged_nuse.csv'
+        data_location = '/home/unal/modelo_rinas/UNAL/merged_nuse.csv'
         df_input = pd.read_csv(data_location,delimiter=",")
 
         df1 = df_input.loc[df_input['COD_UPZ'] == '-']
@@ -874,7 +874,7 @@ def limpieza_datos(df):
 
     logging.debug('Inicia el almacenamiento de DataFrame rebuild_locations_nuse_29112019')
     try:
-        df_output.to_csv(r'/home/unal/modelo_rinas/sepp/merged_nuse.csv',index=None)
+        df_output.to_csv(r'/home/unal/modelo_rinas/UNAL/merged_nuse.csv',index=None)
 
         pd.DataFrame({"Tipo de dato":df_output.dtypes.values,
                     "Celdas con valor '-'":(df_output == '-').sum().values,
@@ -893,7 +893,7 @@ def limpieza_datos(df):
 
     logging.debug('Inicia el almacenamiento de DataFrame rebuild_locations_nuse_29112019')
     try:
-        data_location = '/home/unal/modelo_rinas/sepp/merged_nuse.csv'
+        data_location = '/home/unal/modelo_rinas/UNAL/merged_nuse.csv'
         df_input = pd.read_csv(data_location,delimiter=",")
 
         #Registers without address or coordinates can not be rebuilt
@@ -921,11 +921,11 @@ def limpieza_datos(df):
             pass
         logging.debug('--')
 
-    df_output.to_csv(r'/home/unal/modelo_rinas/sepp/merged_nuse.csv',index=None)
+    df_output.to_csv(r'/home/unal/modelo_rinas/UNAL/merged_nuse.csv',index=None)
 
     # 3. Standardise
 
-    data_location = '/home/unal/modelo_rinas/sepp/merged_nuse.csv'
+    data_location = '/home/unal/modelo_rinas/UNAL/merged_nuse.csv'
     df_input = pd.read_csv(data_location,delimiter=",")
 
     ##print('----- 14 -----')
@@ -981,11 +981,11 @@ def limpieza_datos(df):
 
     df_output['dup_event'] = df_output.apply (lambda row: find_duplicated_events(df_output, row), axis=1)
 
-    df_output.to_csv(r'/home/unal/modelo_rinas/sepp/merged_nuse.csv',index=None)
+    df_output.to_csv(r'/home/unal/modelo_rinas/UNAL/merged_nuse.csv',index=None)
 
     # Delete duplicated events: preserve the first event on dup_event column
 
-    data_location = '/home/unal/modelo_rinas/sepp/merged_nuse.csv'
+    data_location = '/home/unal/modelo_rinas/UNAL/merged_nuse.csv'
     df_input = pd.read_csv(data_location,delimiter=",")
 
     pd.DataFrame({"Tipo de dato":df_input.dtypes.values,
@@ -1077,7 +1077,7 @@ def limpieza_datos(df):
     df_output.drop(columns=['dup_event','time_stamp'],inplace=True)
     df_output.reset_index(inplace=True)
 
-    df_output.to_csv(r'/home/unal/modelo_rinas/sepp/merged_nuse.csv',index=None)
+    df_output.to_csv(r'/home/unal/modelo_rinas/UNAL/merged_nuse.csv',index=None)
 
 
     ##print('----- 21 -----')
@@ -1085,7 +1085,7 @@ def limpieza_datos(df):
     # 4. Normalise
     logging.debug('--')
     try:
-        data_location = '/home/unal/modelo_rinas/sepp/merged_nuse.csv'
+        data_location = '/home/unal/modelo_rinas/UNAL/merged_nuse.csv'
         df_input = pd.read_csv(data_location,delimiter=",")
 
         pd.DataFrame({"Tipo de dato":df_input.dtypes.values,
@@ -1152,20 +1152,20 @@ def limpieza_datos(df):
 
     df_output.loc[(df_output['in_bogota?'] == False)]
 
-    df_output.to_csv(r'/home/unal/modelo_rinas/sepp/merged_nuse.csv',index=None)
+    df_output.to_csv(r'/home/unal/modelo_rinas/UNAL/merged_nuse.csv',index=None)
 
     #Get index of registers out of Bogota and drop it
     list_index_out_bogota=df_output[(df_output['in_bogota?'] == False)].index
     df_output=df_output.drop(list_index_out_bogota)
     df_output['in_bogota?'].all()
 
-    df_output.to_csv(r'/home/unal/modelo_rinas/sepp/merged_nuse.csv',index=None)
+    df_output.to_csv(r'/home/unal/modelo_rinas/UNAL/merged_nuse.csv',index=None)
 
     ##print('----- 23 -----')
 
     # 5. De-duplicate
 
-    data_location = '/home/unal/modelo_rinas/sepp/merged_nuse.csv'
+    data_location = '/home/unal/modelo_rinas/UNAL/merged_nuse.csv'
     df_input = pd.read_csv(data_location,delimiter=",")
 
 
@@ -1183,13 +1183,13 @@ def limpieza_datos(df):
 
     len(df_input) == len(df_input['STR_NUMERO_INTERNO'].unique())
 
-    df_input.to_csv(r'/home/unal/modelo_rinas/sepp/merged_nuse.csv',index=None)
+    df_input.to_csv(r'/home/unal/modelo_rinas/UNAL/merged_nuse.csv',index=None)
 
     ##print('----- 24 -----')
 
     # 6. Verify and enrich
 
-    data_location = '/home/unal/modelo_rinas/sepp/merged_nuse.csv'
+    data_location = '/home/unal/modelo_rinas/UNAL/merged_nuse.csv'
     df_input = pd.read_csv(data_location,delimiter=",")
 
     pd.DataFrame({"Tipo de dato":df_input.dtypes.values,
@@ -1242,7 +1242,7 @@ def limpieza_datos(df):
                   "Celdas vacías": df_output.isna().sum().values},
                  index=df_output.columns)
 
-    df_output.to_csv(r'/home/unal/modelo_rinas/sepp/merged_nuse.csv',index=None) 
+    df_output.to_csv(r'/home/unal/modelo_rinas/UNAL/merged_nuse.csv',index=None) 
     logging.debug('Termina la ejecucion de codigo') 
 
 
