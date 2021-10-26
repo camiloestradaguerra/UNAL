@@ -24,7 +24,7 @@ from folium.plugins import HeatMap, MarkerCluster
 from pyproj import Proj, transform
 from pyproj import Transformer
 from collections import namedtuple
-from sepp_auxiliar_functions11 import *
+from sepp_auxiliar_functions import *
 import fiona
 import logging
 import requests
@@ -36,7 +36,7 @@ from pyspark.sql import SparkSession, functions
 import logging
 import pandas as pd
 from datetime import timedelta, datetime
-from utilis10 import get_estados_ejecucion, get_tipos_proceso, get_token_acces, update_process_state
+from utilis import get_estados_ejecucion, get_tipos_proceso, get_token_acces, update_process_state
 from constants_manager import ESTADO_EXITO, ESTADO_ERROR, ESTADO_PROCESO, ESTADO_CANCELADO, NAME_PREDICCION, NAME_ENTRENAMIENTO, NAME_PREPROCESAMIENTO, NAME_VALIDACION
 
 class ModeloBase:
