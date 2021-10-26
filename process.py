@@ -38,7 +38,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final):
             else:
                 datos_eventos = gpd.read_file('eventos_covariados.geojson')
                 def FECHA_mod(txt):
-                return txt.replace("T"," ")
+                    return txt.replace("T"," ")
                 file = open("fechas_entrenamiento.txt", "w")
                 file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
                 file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
