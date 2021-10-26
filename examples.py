@@ -9,6 +9,6 @@ def example1():
           "archivos de los modelos basicos de clasificación y cuantificación. Al final " +
           "guarda todos los modelos creados"
           )
-    os.system("python process.py " + "--log_file 'example_log.log' " + "--subprocess 'clean' ")
+    os.system("python process.py " + "--log_file 'example_log.log' " + "--subprocess 'clean' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_inicial '2021-01-05 23:59:59' ")
 
 example1()

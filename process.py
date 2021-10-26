@@ -10,13 +10,13 @@ from utilis import *
 
 sepp_mod = ModeloRinhas()
 
-fecha_inicial = "2021-01-01 00:00:00"
-fecha_final = "2021-01-02 23:59:59"
+#fecha_inicial = "2021-01-01 00:00:00"
+#fecha_final = "2021-01-02 23:59:59"
 
 #fecha_inicial_pr = "2021-02-01 00:00:00"
 #fecha_final_pr = "2021-02-01 04:00:00"
 
-def process(log_file, sub_process):
+def process(log_file, sub_process, fecha_inicial, fecha_final):
     logging.basicConfig(filename=log_file,level=logging.DEBUG)
     logging.debug('Empezó función process.')
 
@@ -41,13 +41,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Función ejecución proceso')
     parser.add_argument("--log_file", required=True, help="Dirección archivo de log")
     parser.add_argument("--subprocess", required=True, help="Subproceso a ejecutar", default="clean", choices=["clean", "train", "predict"])
-    
+    parser.add_argument("--fecha_inicial", required=True, help="Fecha Inicial para los datos")
+    parser.add_argument("--fecha_final", required=True, help="Fecha Final para los datos")
     args = parser.parse_args()
     subprocess=args.subprocess
     log_file = args.log_file
-
+    fecha_inicial = args.fecha_inicial
+    fecha_final = args.fecha_final
+    
     try:
-        process(log_file, subprocess)
+        process(log_file, subprocess, fecha_inicial, fecha_final)
     
     except Exception as e:
         raise Exception(e)
