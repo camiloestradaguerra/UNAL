@@ -120,7 +120,7 @@ class ModeloRinhas(ModeloBase):
             logging.error(msg_error)
             raise Exception(msg_error + " / " + str(e))
 
-    def train_model(self, data_eventos, fecha_inicial, fecha_final):
+    def train_model(self, data_eventos):
         """
         Calculate the optimized values for the conditional intensity for the SEPP model
 
@@ -133,9 +133,6 @@ class ModeloRinhas(ModeloBase):
         :return omega: optimization of the parameter related with ocurrence of triggering events
         :return sigma2: optimization of the parameter related with the spread of triggering events
         """
-        #self.data_eventos = data_eventos
-        #self.fecha_inicial = fecha_inicial
-        #self.fecha_final = fecha_final
         root_logger= logging.getLogger()
         root_logger.setLevel(logging.DEBUG) # or whatever
         handler = logging.FileHandler('text.log', 'w', 'utf-8') # or whatever
@@ -211,10 +208,6 @@ class ModeloRinhas(ModeloBase):
                 file.write(str(beta[4]) + '\n')
                 file.write(str(omega) + '\n')
                 file.write(str(sigma2) + '\n')
-                file.close()
-                file = open("fechas_entrenamiento.txt", "w")
-                file.write(str(fecha_inicial) + '\n')
-                file.write(str(fecha_final) + '\n')
                 file.close()
                 logging.debug("Termina el entrenamiento para el modelo de rinas de seguridad.")
                 update_process_state(self.tipos_proceso[NAME_ENTRENAMIENTO], self.estados_ejecucion[ESTADO_EXITO], get_token_acces())

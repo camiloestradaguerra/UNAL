@@ -28,9 +28,20 @@ def process(log_file, sub_process, fecha_inicial, fecha_final):
         elif subprocess == "train":
             if os.path.exists('./eventos_covariados.geojson') == False:
                 print("Primero se debe hacer el proceso de Preprocesamiento de Datos.")
+                sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
+                datos_eventos = gpd.read_file('eventos_covariados.geojson')
+                file = open("fechas_entrenamiento.txt", "w")
+                file.write(str(fecha_inicial) + '\n')
+                file.write(str(fecha_final) + '\n')
+                file.close()
+                sepp_model.train(datos_eventos)
             else:
                 datos_eventos = gpd.read_file('eventos_covariados.geojson')
-                datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
+                file = open("fechas_entrenamiento.txt", "w")
+                file.write(str(datos_eventos.FECHA.iloc[0]) + '\n')
+                file.write(str(datos_eventos.FECHA.iloc[-1]) + '\n')
+                file.close()
+                sepp_model.train(datos_eventos)
         
     except Exception as e:
         msg_error = "No se completó función process"
