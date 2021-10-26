@@ -37,9 +37,11 @@ def process(log_file, sub_process, fecha_inicial, fecha_final):
                 sepp_model.train_model(datos_eventos)
             else:
                 datos_eventos = gpd.read_file('eventos_covariados.geojson')
+                def FECHA_mod(txt):
+                return txt.replace("T"," ")
                 file = open("fechas_entrenamiento.txt", "w")
-                file.write(str(datos_eventos.FECHA.iloc[0]) + '\n')
-                file.write(str(datos_eventos.FECHA.iloc[-1]) + '\n')
+                file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
+                file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
                 file.close()
                 sepp_model.train_model(datos_eventos)
         
