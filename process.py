@@ -52,6 +52,8 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                 else:
                     datos_eventos = gpd.read_file('eventos_covariados.geojson')
                     file = open("fechas_entrenamiento.txt", "w")
+                    def FECHA_mod(txt):
+                        return txt.replace("T"," ")
                     file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
                     file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
                     file.close()
@@ -64,7 +66,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                 fecha_inicial_tr = parameters[0]
                 fecha_final_tr = parameters[1]
                 sepp_model.prediction_model(fecha_inicial_pr, fecha_final_pr) 
-                       
+
     except Exception as e:
         msg_error = "No se completó función process"
         logging.error(msg_error)
