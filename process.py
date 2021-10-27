@@ -50,16 +50,21 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     file.close()
                     sepp_model.train_model(datos_eventos)
                     sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    prediccion = sepp_mod.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
+                    fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)
                 else:
                     datos_eventos = gpd.read_file('eventos_covariados.geojson')
-                    file = open("fechas_entrenamiento.txt", "w")
+                    file = open("fechas_entrenamiento.tx", "w")
                     def FECHA_mod(txt):
                         return txt.replace("T"," ")
                     file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
                     file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
                     file.close()
                     sepp_model.train_model(datos_eventos)
-                    sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    prediccion = sepp_mod.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
+                    fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
             else:
                 filename = "fechas_entrenamiento.txt"
                 parametros = np.array([])
@@ -74,7 +79,12 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                 fecha_inicial_pr = datetime.strptime(fecha_inicial_pr, date_format_str)
                 diff_pr = (fecha_inicial_pr - fecha_final_tr).total_seconds()/3600
                 if diff_pr < 336:
-                    sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    print(1)
+                    prediccion = sepp_mod.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    print(2)
+                    array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
+                    print(3)
+                    fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
                     print("SE completó el proceso de prediccion")
                 
     except Exception as e:
