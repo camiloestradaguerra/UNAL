@@ -49,6 +49,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     file.write(str(fecha_final) + '\n')
                     file.close()
                     sepp_model.train_model(datos_eventos)
+                    sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
                 else:
                     datos_eventos = gpd.read_file('eventos_covariados.geojson')
                     file = open("fechas_entrenamiento.txt", "w")
@@ -58,6 +59,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
                     file.close()
                     sepp_model.train_model(datos_eventos)
+                    sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
             else:
                 filename = "fechas_entrenamiento.txt"
                 with open(filename) as f_obj:
@@ -65,7 +67,11 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                         parameters = np.append(parameters,str(line.rstrip()))
                 fecha_inicial_tr = parameters[0]
                 fecha_final_tr = parameters[1]
-                sepp_model.prediction_model(fecha_inicial_pr, fecha_final_pr) 
+                print(fecha_inicial_tr, fecha_final_tr, fecha_inicial_pr, fecha_final_pr)
+                #fecha_inicial = datetime.strptime(fecha_inicial, date_format_str)
+                #fecha_final = datetime.strptime(fecha_final, date_format_str)
+                #diff = (fecha_final - fecha_inicial).total_seconds()/3600
+                #sepp_model.prediction_model(fecha_inicial_pr, fecha_final_pr) 
 
     except Exception as e:
         msg_error = "No se completó función process"
