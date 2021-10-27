@@ -1249,3 +1249,6 @@ def limpieza_datos(df):
     #print("--- %s seconds ---" % (time.time() - start_time))
     
     return(df_output)
+
+    def FECHA_mod(txt):
+        return txt.replace("T"," ")

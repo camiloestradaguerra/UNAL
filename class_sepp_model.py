@@ -222,7 +222,7 @@ class ModeloRinhas(ModeloBase):
     ##############
     # Simulation #
     ##############
-    def predict_model(self, datos_eventos, fecha_inicial, fecha_final):
+    def predict_model(self, fecha_inicial, fecha_final):
         """
         Simulate events during a time
         :param beta: weight for the covariates
