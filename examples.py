@@ -18,4 +18,11 @@ def example2():
           )
     os.system("python process.py " + "--log_file 'example_log.log' " + "--subprocess 'train' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-03 13:59:59' ")
 
-example2()
+def example3():
+    print("Ejemplo primera ejecución cuando no existe modelo preentrenado y si existen los " +
+          "archivos de los modelos basicos de clasificación y cuantificación. Al final " +
+          "guarda todos los modelos creados"
+          )
+    os.system("python process.py " + "--log_file 'example_log.log' " + "--subprocess 'predict' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-03 13:59:59' ")
+
+example3()
