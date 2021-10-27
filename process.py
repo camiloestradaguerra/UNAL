@@ -62,6 +62,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
             else:
                 filename = "fechas_entrenamiento.txt"
+                parametros = np.array([])
                 with open(filename) as f_obj:
                     for line in f_obj:
                         parametros = np.append(parametros, str(line.rstrip()))
