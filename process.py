@@ -69,11 +69,14 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                 fecha_inicial_tr = parametros[0]
                 fecha_final_tr = parametros[1]
                 print(fecha_inicial_tr, fecha_final_tr, fecha_inicial_pr, fecha_final_pr)
-                #fecha_inicial = datetime.strptime(fecha_inicial, date_format_str)
-                #fecha_final = datetime.strptime(fecha_final, date_format_str)
-                #diff = (fecha_final - fecha_inicial).total_seconds()/3600
-                #sepp_model.prediction_model(fecha_inicial_pr, fecha_final_pr) 
-
+                date_format_str = '%Y-%m-%d %H:%M:%S'
+                fecha_final_tr = datetime.strptime(fecha_final_tr, date_format_str)
+                fecha_inicial_pr = datetime.strptime(fecha_inicial_pr, date_format_str)
+                diff_pr = (fecha_inicial_pr - fecha_final_tr).total_seconds()/3600
+                if diff_pr < 336:
+                    sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    print("SE completó el proceso de prediccion")
+                
     except Exception as e:
         msg_error = "No se completó función process"
         logging.error(msg_error)
