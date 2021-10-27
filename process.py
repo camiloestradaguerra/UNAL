@@ -64,7 +64,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                 filename = "fechas_entrenamiento.txt"
                 with open(filename) as f_obj:
                     for line in f_obj:
-                        parameters = np.append(parameters,str(line.rstrip()))
+                        parametros = np.append(parameters,str(line.rstrip()))
                 fecha_inicial_tr = parameters[0]
                 fecha_final_tr = parameters[1]
                 print(fecha_inicial_tr, fecha_final_tr, fecha_inicial_pr, fecha_final_pr)
