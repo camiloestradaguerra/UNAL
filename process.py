@@ -20,26 +20,40 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
         if sub_process == "clean":
             sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
         elif subprocess == "train":
+            # Si NO hay hay datos almacenados: Revisa si existe el df con datos y si NO, entonces crea un df 
+            #con los datos entre las fechas seleccionadas y entrena el modelo con estos datos
             if os.path.exists('./eventos_covariados.geojson') == False:
                 print("Primero se debe hacer el proceso de Preprocesamiento de Datos.")
-                sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
-                datos_eventos = gpd.read_file('eventos_covariados.geojson')
+                # Procesa los datos
+                datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
+                # Crea un archivo externo con las fechas seleccionadas para los datos
                 file = open("fechas_entrenamiento.txt", "w")
                 file.write(str(fecha_inicial) + '\n')
                 file.write(str(fecha_final) + '\n')
                 file.close()
+                # Entrena el modelo y crea un archivo con los parametros optimizados
                 sepp_model.train_model(datos_eventos)
+            # Si SI hay un modelo entrenado: Carga los datos y entrena con los datos que hayan en 
+            # eventos_covariados y crea un archivo externo con las fechas inicial y final de estos datos
             else:
+                # Lee los el df con los datos
                 datos_eventos = gpd.read_file('eventos_covariados.geojson')
+                # Crea el archivo externo con las fechas inicial y final de los datos
                 file = open("fechas_entrenamiento.txt", "w")
                 file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
                 file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
                 file.close()
+                # Entrena el modelo con los datos y crea un archivo con los parametros optimizados
                 sepp_model.train_model(datos_eventos)
         
         elif subprocess == "predict":
+            # Si NO hay un modelo ya previamente entrenado: Revisa si existe el archivo parametros_optimizados
+            # (NO). Luego revisa si están por lo menos los datos eventos_covariados, y si no estan, entonces
+            # hace un procesamiento de datos entre las fechas seleccionadas, entrena el modelo con estas fechas
+            # y luego predice con las fechas ingresadas por el usuario
             if os.path.exists('./parametros_optimizados.txt') == False:
                 print("Primero se debe hacer el proceso de train")
+                # Lo mismo que para el proceso de entrenamiento
                 if os.path.exists('./eventos_covariados.geojson') == False:
                     print("Primero se debe hacer el proceso de Preprocesamiento de Datos.")
                     sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
@@ -65,8 +79,16 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     prediccion = sepp_mod.predict_model(fecha_inicial_pr, fecha_final_pr)
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
+            # Si SI hay un modelo ya previamente entrenado: Revisa si existe el archivo parametros_optimizados
+            # (NO). Luego revisa si están por lo menos los datos eventos_covariados, y si no estan, entonces
+            # hace un procesamiento de datos entre las fechas seleccionadas, entrena el modelo con estas fechas
+            # y luego predice con las fechas ingresadas por el usuario
             else:
+                # Carga de los datos con los que se entreno el modelo
                 datos_eventos = gpd.read_file('eventos_covariados.geojson')
+                # Se leen las fechas inicial y final con las que se entreno el modelo. Si hay una diferencia mayor
+                # a 2 semanas entre la fecha inicial de prediccion y la fecha final del entrenamiento, entonces 
+                # toca entrenar con datos nuevos
                 filename = "fechas_entrenamiento.txt"
                 parametros = np.array([])
                 with open(filename) as f_obj:
@@ -81,14 +103,13 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                 diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
                 print(type(diff_pr))
                 if diff_pr < 336.0:
-                    print(1)
+                    # Se hace la prediccion
                     prediccion = sepp_mod.predict_model(fecha_inicial_pr, fecha_final_pr)
-                    print(2)
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
-                    print(3)
+                    # Almacena el df con eventos unicamente en los puntos calientes
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
-                    print("Se completó el proceso de prediccion")
-                
+                else:
+                    break
     except Exception as e:
         msg_error = "No se completó función process"
         logging.error(msg_error)
