@@ -122,9 +122,11 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     file.close()
 
         #elif subprocess == "validation":
-        #    if os.path.exists('./predicted_events.geojson') == False:
-        #        print("Primero se debe hacer el proceso de prediccion")
+        #    if os.path.exists('./fechas_prediccion.txt') == False:
+        #        print("Primero se debe hacer el proceso de prediccion")    
         #    else:
+        #        datos_eventos = gpd.read_file('eventos_covariados.geojson')
+
 
             
 

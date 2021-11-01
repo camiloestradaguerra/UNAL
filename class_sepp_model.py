@@ -244,188 +244,186 @@ class ModeloRinhas(ModeloBase):
         logging.debug("Comienza la prediccion para el modelo de rinas de seguridad.") 
         update_process_state(self.tipos_proceso[NAME_PREDICCION], self.estados_ejecucion[ESTADO_PROCESO], get_token_acces())
 
-        #try:
-        date_format_str = '%Y-%m-%d %H:%M:%S'
-        fecha_inicial = datetime.strptime(fecha_inicial, date_format_str)
-        fecha_final = datetime.strptime(fecha_final, date_format_str)
-        diff = (fecha_final - fecha_inicial).total_seconds()/3600
-        if diff > 0 and diff <= 168: 
-            poligonos_df = gpd.read_file('poligonos_covariados.geojson') 
-            cov_norm_cell_m = np.array(poligonos_df[['Promedio Estrato 2019','Area de Cuadrantes de Policia 2020','Comando de Atencion Inmediata','Estaciones Policia','Int']])
-            parameters = np.array([])
-            filename = "parametros_optimizados.txt"
-            with open(filename) as f_obj:
-                for line in f_obj:
-                    parameters = np.append(parameters,float(line.rstrip()))
-            beta = np.array([parameters[0], parameters[1], parameters[2], parameters[3], parameters[4]])
-            omega = parameters[5]
-            sigma2 = parameters[6] 
-            window_size = diff 
-            Event = namedtuple("Event", ["t", "loc_x", "loc_y"])
-            alpha = 1
-            sigma = np.sqrt(sigma2)
-            #print(poligonos_df.tail())
-            def get_random_point_in_polygon_back(poly):
-                """
-                Generates random background events inside a polygon
-                """
+        try:
+            date_format_str = '%Y-%m-%d %H:%M:%S'
+            fecha_inicial = datetime.strptime(fecha_inicial, date_format_str)
+            fecha_final = datetime.strptime(fecha_final, date_format_str)
+            diff = (fecha_final - fecha_inicial).total_seconds()/3600
+            if diff > 0 and diff <= 168: 
+                poligonos_df = gpd.read_file('poligonos_covariados.geojson') 
+                cov_norm_cell_m = np.array(poligonos_df[['Promedio Estrato 2019','Area de Cuadrantes de Policia 2020','Comando de Atencion Inmediata','Estaciones Policia','Int']])
+                parameters = np.array([])
+                filename = "parametros_optimizados.txt"
+                with open(filename) as f_obj:
+                    for line in f_obj:
+                        parameters = np.append(parameters,float(line.rstrip()))
+                beta = np.array([parameters[0], parameters[1], parameters[2], parameters[3], parameters[4]])
+                omega = parameters[5]
+                sigma2 = parameters[6] 
+                window_size = diff 
+                Event = namedtuple("Event", ["t", "loc_x", "loc_y"])
+                alpha = 1
+                sigma = np.sqrt(sigma2)
+                def get_random_point_in_polygon_back(poly):
+                    """
+                    Generates random background events inside a polygon
+                    """
+                
+                    minx, miny, maxx, maxy = poly.bounds
+                    while True:
+                        p = Point(random.uniform(minx, maxx), random.uniform(miny, maxy))
+                        if poly.contains(p):
+                            return p
+
+                def get_random_point_in_polygon_trig(poly):
+                    """
+                    Generates random triggering events inside a polygon
+                    :param poly: geometry of the polygon
+                    :return p: point inside of polygon
+                    """
+                
+                    while True:
+                        loc_x = np.random.normal(loc=parent.loc_x, scale=sigma)
+                        loc_y = np.random.normal(loc=parent.loc_y, scale=sigma)
+                        p = Point(loc_x, loc_y)
+                        if poly.contains(p):
+                            return p
+
+                def sort_with_causes(points, caused_by):
+                    """
+                    Sorts events in time, and maintains caused by information
+                    :param points: array of events
+                    :parm caused_by: array with the number of the event that caused it
+                    :return events: sorted point array
+                    :return new_caused_by: sorted caused_by array
+                    """
+                    # caused_by[i] = j<i if i caused by j, or i if i background
+                    tagged = list(enumerate(points))
+                    tagged.sort(key = lambda pair : pair[1].t)
+                    new_caused_by = []
+                    for old_index, event in tagged:
+                        old_cause_index = caused_by[old_index]
+                        new_cause_index,_ = next(x for x in enumerate(tagged) if x[1][0] == old_cause_index)
+                        new_caused_by.append(new_cause_index)
+                    events = [x[1] for x in tagged]
+                    return events, new_caused_by
+
+                def simulate_sub_process(parent : Event, k):
+                    """
+                    Generates the triggered events
+                    :param parent : Event: parent event
+                    :param k: number of cell where ocurred the event
+                    """
+                    points = []
+                    t = 0
+                    while True:                
+                        t += np.random.exponential(1/omega)
+                        if t >= alpha:
+                            return points
+                        def get_random_point_in_polygon_trig(poly):
+                            while True:
+                                loc_x = np.random.normal(loc=parent.loc_x, scale=sigma)
+                                loc_y = np.random.normal(loc=parent.loc_y, scale=sigma)
+                                p = Point(loc_x, loc_y)
+                                if poly.contains(p):
+                                    return p
+                        p = get_random_point_in_polygon_trig(poligonos_df.geometry[k])
+                        loc_x = p.x
+                        loc_y = p.y
+                        points.append(Event(parent.t + np.log(alpha/abs(alpha-t*omega))/omega , loc_x, loc_y))
+
+                def _add_point(points, omega):
+                    """
+                    Generates interarrival times between consecutive events and adds it to a list
+                    :param points: list of points
+                    :param mu: events rate for the cell
+                    """
             
-                minx, miny, maxx, maxy = poly.bounds
-                while True:
-                    p = Point(random.uniform(minx, maxx), random.uniform(miny, maxy))
-                    if poly.contains(p):
-                        return p
-
-            def get_random_point_in_polygon_trig(poly):
-                """
-                Generates random triggering events inside a polygon
-                :param poly: geometry of the polygon
-                :return p: point inside of polygon
-                """
+                    wait_time = np.random.exponential(1/omega)
+                    if len(points) == 0:
+                        last = 0
+                    else:
+                        last = points[-1]
+                    points.append(last + wait_time)
             
-                while True:
-                    loc_x = np.random.normal(loc=parent.loc_x, scale=sigma)
-                    loc_y = np.random.normal(loc=parent.loc_y, scale=sigma)
-                    p = Point(loc_x, loc_y)
-                    if poly.contains(p):
-                        return p
-
-            def sort_with_causes(points, caused_by):
-                """
-                Sorts events in time, and maintains caused by information
-                :param points: array of events
-                :parm caused_by: array with the number of the event that caused it
-                :return events: sorted point array
-                :return new_caused_by: sorted caused_by array
-                """
-                # caused_by[i] = j<i if i caused by j, or i if i background
-                tagged = list(enumerate(points))
-                tagged.sort(key = lambda pair : pair[1].t)
-                new_caused_by = []
-                for old_index, event in tagged:
-                    old_cause_index = caused_by[old_index]
-                    new_cause_index,_ = next(x for x in enumerate(tagged) if x[1][0] == old_cause_index)
-                    new_caused_by.append(new_cause_index)
-                events = [x[1] for x in tagged]
-                return events, new_caused_by
-
-            def simulate_sub_process(parent : Event, k):
-            #def simulate_sub_process(Event, k):
-                """
-                Generates the triggered events
-                :param parent : Event: parent event
-                :param k: number of cell where ocurred the event
-                """
-                points = []
-                t = 0
-                while True:                
-                    t += np.random.exponential(1/omega)
-                    if t >= alpha:
-                        return points
-                    def get_random_point_in_polygon_trig(poly):
-                        while True:
-                            loc_x = np.random.normal(loc=parent.loc_x, scale=sigma)
-                            loc_y = np.random.normal(loc=parent.loc_y, scale=sigma)
-                            p = Point(loc_x, loc_y)
-                            if poly.contains(p):
-                                return p
-                    p = get_random_point_in_polygon_trig(poligonos_df.geometry[k])
-                    loc_x = p.x
-                    loc_y = p.y
-                    points.append(Event(parent.t + np.log(alpha/abs(alpha-t*omega))/omega , loc_x, loc_y))
-
-            def _add_point(points, omega):
-                """
-                Generates interarrival times between consecutive events and adds it to a list
-                :param points: list of points
-                :param mu: events rate for the cell
-                """
-        
-                wait_time = np.random.exponential(1/omega)
-                if len(points) == 0:
-                    last = 0
-                else:
-                    last = points[-1]
-                points.append(last + wait_time)
-        
-            def sample_poisson_process_hom(window_size, omega):
-                """
-                Generates the background events according to the background events rate in some window temporal size 
-                :param window_size: window temporal size
-                :param omega: background events rate
-                :return points: simulated background points
-                """
-                points = []
-                _add_point(points, omega)
-                while points[-1] < window_size:
+                def sample_poisson_process_hom(window_size, omega):
+                    """
+                    Generates the background events according to the background events rate in some window temporal size 
+                    :param window_size: window temporal size
+                    :param omega: background events rate
+                    :return points: simulated background points
+                    """
+                    points = []
                     _add_point(points, omega)
-                return points
+                    while points[-1] < window_size:
+                        _add_point(points, omega)
+                    return points
 
-            def simulate(window_size, k):
-                """
-                Generates the background events with their descendant events in some window temporal size in one cell
-                :param window_size: window temporal size
-                :param k: number of cell
-                :return puntos_gdf: dataframe with the simulated events
-                :return array_cells_events_sim: two dimensional array with cell number and its corresponding number of events
-                """
-                backgrounds = sample_poisson_process_hom(window_size, mu[k])
-                backgrounds = backgrounds[:-1]
-                points = []
-                for i in range(0, len(backgrounds)):
-                    t = backgrounds[i]
-                    p = get_random_point_in_polygon_back(poligonos_df.geometry[k])
-                    px = p.x
-                    py = p.y
-                    st_point = Event(t, px, py)
-                    points.append(st_point)
-                backgrounds = points    
-                caused_by = [ i for i in range(len(points))]
-                to_process = [(i,p) for i, p in enumerate(points)]
-                while len(to_process) > 0:
-                    (index, next_point) = to_process.pop()
-                    for event in simulate_sub_process(next_point,k):
-                        if event.t < window_size:
-                            points.append(event)
-                            caused_by.append(index)
-                            to_process.append((len(points) - 1,event))
-                points, caused_by = sort_with_causes(points, caused_by)
-                return points,  backgrounds, caused_by
+                def simulate(window_size, k):
+                    """
+                    Generates the background events with their descendant events in some window temporal size in one cell
+                    :param window_size: window temporal size
+                    :param k: number of cell
+                    :return puntos_gdf: dataframe with the simulated events
+                    :return array_cells_events_sim: two dimensional array with cell number and its corresponding number of events
+                    """
+                    backgrounds = sample_poisson_process_hom(window_size, mu[k])
+                    backgrounds = backgrounds[:-1]
+                    points = []
+                    for i in range(0, len(backgrounds)):
+                        t = backgrounds[i]
+                        p = get_random_point_in_polygon_back(poligonos_df.geometry[k])
+                        px = p.x
+                        py = p.y
+                        st_point = Event(t, px, py)
+                        points.append(st_point)
+                    backgrounds = points    
+                    caused_by = [ i for i in range(len(points))]
+                    to_process = [(i,p) for i, p in enumerate(points)]
+                    while len(to_process) > 0:
+                        (index, next_point) = to_process.pop()
+                        for event in simulate_sub_process(next_point,k):
+                            if event.t < window_size:
+                                points.append(event)
+                                caused_by.append(index)
+                                to_process.append((len(points) - 1,event))
+                    points, caused_by = sort_with_causes(points, caused_by)
+                    return points,  backgrounds, caused_by
 
-            events_sim_on_cells = np.array([])
-            all_events_sim = np.array([])
+                events_sim_on_cells = np.array([])
+                all_events_sim = np.array([])
 
-            mu = np.exp((beta*cov_norm_cell_m).sum(axis=1).astype(float))
-    
-            for k in range(0, len(cov_norm_cell_m)):
-                random.seed(7)
-                ev = simulate(window_size, k)[0]
-                # events of all cells
-                all_events_sim = np.append(all_events_sim, ev)
-                # number of event per cell
-                events_sim_on_cells = np.array(np.append(events_sim_on_cells, len(ev)),int)
+                mu = np.exp((beta*cov_norm_cell_m).sum(axis=1).astype(float))
         
-            # simulated events on cells (number of events on each cell) (t,x,y) each event   
-            all_events_sim = all_events_sim.reshape(int(len(all_events_sim)/3), 3)
-        
-            puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y"])
-            geometry = [Point(xy) for xy in zip(puntos_gdf['X'], puntos_gdf['Y'])]
-            crs = {'init': 'epsg:3857'}
-            puntos_gdf = gpd.GeoDataFrame(puntos_gdf, crs=crs, geometry=geometry)
-            puntos_gdf = puntos_gdf.sort_values('TimeStamp').reset_index().drop(columns = 'index')
-        
-            array_cells_events_sim = np.arange(0, len(events_sim_on_cells), 1).tolist()
-            array_cells_events_sim = list(map(list,zip(array_cells_events_sim,events_sim_on_cells)))
+                for k in range(0, len(cov_norm_cell_m)):
+                    random.seed(7)
+                    ev = simulate(window_size, k)[0]
+                    # events of all cells
+                    all_events_sim = np.append(all_events_sim, ev)
+                    # number of event per cell
+                    events_sim_on_cells = np.array(np.append(events_sim_on_cells, len(ev)),int)
+            
+                # simulated events on cells (number of events on each cell) (t,x,y) each event   
+                all_events_sim = all_events_sim.reshape(int(len(all_events_sim)/3), 3)
+            
+                puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y"])
+                geometry = [Point(xy) for xy in zip(puntos_gdf['X'], puntos_gdf['Y'])]
+                crs = {'init': 'epsg:3857'}
+                puntos_gdf = gpd.GeoDataFrame(puntos_gdf, crs=crs, geometry=geometry)
+                puntos_gdf = puntos_gdf.sort_values('TimeStamp').reset_index().drop(columns = 'index')
+            
+                array_cells_events_sim = np.arange(0, len(events_sim_on_cells), 1).tolist()
+                array_cells_events_sim = list(map(list,zip(array_cells_events_sim,events_sim_on_cells)))
 
-            #logging.debug("Termina la prediccion para el modelo de rinas de seguridad.")
-            #update_process_state(self.tipos_proceso[NAME_PREDICCION], self.estados_ejecucion[ESTADO_EXITO], get_token_acces())
-            return puntos_gdf, array_cells_events_sim
+                logging.debug("Termina la prediccion para el modelo de rinas de seguridad.")
+                update_process_state(self.tipos_proceso[NAME_PREDICCION], self.estados_ejecucion[ESTADO_EXITO], get_token_acces())
+                return puntos_gdf, array_cells_events_sim
 
-#except Exception as e:
-#    update_process_state(self.tipos_proceso[NAME_PREDICCION], self.estados_ejecucion[ESTADO_ERROR], get_token_acces())
-#    msg_error = "No se completo el proceso de prediccion del modelo de rinas de seguridad."   
-#    logging.error(msg_error)
-#    raise Exception(msg_error + " / " + str(e))
+        except Exception as e:
+            update_process_state(self.tipos_proceso[NAME_PREDICCION], self.estados_ejecucion[ESTADO_ERROR], get_token_acces())
+            msg_error = "No se completo el proceso de prediccion del modelo de rinas de seguridad."   
+            logging.error(msg_error)
+            raise Exception(msg_error + " / " + str(e))
 
     ##############
     # Validation #
