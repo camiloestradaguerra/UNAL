@@ -116,10 +116,17 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     # Almacena el df con eventos unicamente en los puntos calientes
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
+                    #validation = sepp_mod.validation_model(fil[0], fil[1])
                     file = open("fechas_prediccion.txt", "w")
                     file.write(str(fecha_inicial_pr) + '\n')
                     file.write(str(fecha_final_pr) + '\n')
                     file.close()
+                    print("Ultimos datos")
+                    print(fil[0])
+                    print(fil[1])
+                    #file = open("validation.txt", "w")
+                    #file.write(str(validacion))
+                    #file.close()
 
         #elif subprocess == "validation":
         #    if os.path.exists('./fechas_prediccion.txt') == False:
