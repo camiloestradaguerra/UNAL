@@ -497,7 +497,6 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
         total_ev = np.append(total_ev, two_dim_array_pred_cell[i][1])
     total_ev = sum(total_ev)
     total_ev    
-    # si deseamos calcular PAI, tenemos que sumart el area total de los poligonos con celdas numero number_ev_pred_on_hotspots
     return sum(number_ev_pred_on_hotspots), total_ev, puntos_gdf_cells_4326
 
 

@@ -67,6 +67,10 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     prediccion = sepp_mod.predict_model(fecha_inicial_pr, fecha_final_pr)
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)
+                    file = open("fechas_prediccion.txt", "w")
+                    file.write(str(fecha_inicial_pr) + '\n')
+                    file.write(str(fecha_final_pr) + '\n')
+                    file.close()
                 else:
                     datos_eventos = gpd.read_file('eventos_covariados.geojson')
                     file = open("fechas_entrenamiento.tx", "w")
@@ -79,6 +83,10 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     prediccion = sepp_mod.predict_model(fecha_inicial_pr, fecha_final_pr)
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
+                    file = open("fechas_prediccion.txt", "w")
+                    file.write(str(fecha_inicial_pr) + '\n')
+                    file.write(str(fecha_final_pr) + '\n')
+                    file.close()
             # Si SI hay un modelo ya previamente entrenado: Revisa si existe el archivo parametros_optimizados
             # (NO). Luego revisa si están por lo menos los datos eventos_covariados, y si no estan, entonces
             # hace un procesamiento de datos entre las fechas seleccionadas, entrena el modelo con estas fechas
@@ -108,6 +116,17 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     # Almacena el df con eventos unicamente en los puntos calientes
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
+                    file = open("fechas_prediccion.txt", "w")
+                    file.write(str(fecha_inicial_pr) + '\n')
+                    file.write(str(fecha_final_pr) + '\n')
+                    file.close()
+
+        #elif subprocess == "validation":
+        #    if os.path.exists('./predicted_events.geojson') == False:
+        #        print("Primero se debe hacer el proceso de prediccion")
+        #    else:
+
+            
 
     except Exception as e:
         msg_error = "No se completó función process"
