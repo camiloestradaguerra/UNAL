@@ -121,12 +121,10 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     file.write(str(fecha_inicial_pr) + '\n')
                     file.write(str(fecha_final_pr) + '\n')
                     file.close()
-                    print("Ultimos datos")
-                    print(fil[0])
-                    print(fil[1])
-                    #file = open("validation.txt", "w")
-                    #file.write(str(validacion))
-                    #file.close()
+                    file = open("datos_validacion.txt", "w")
+                    file.write(str(fil[0]) + '\n')
+                    file.write(str(fil[1]) + '\n')
+                    file.close()
 
         #elif subprocess == "validation":
         #    if os.path.exists('./fechas_prediccion.txt') == False:
