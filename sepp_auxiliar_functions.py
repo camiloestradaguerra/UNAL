@@ -3,6 +3,8 @@ import os
 import numpy as np
 import math
 import matplotlib.pyplot as plt
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 import pandas as pd
 import geopandas as gpd
 import gmaps
@@ -40,7 +42,6 @@ import logging
 import time
 import pyspark
 from pyspark.sql import SparkSession
-import pandas as pd
 from datetime import datetime, date
 from pyspark.sql import Row
 import shutup 

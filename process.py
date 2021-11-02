@@ -1,3 +1,5 @@
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 import sys
 from class_sepp_model import *
 from sepp_auxiliar_functions import *

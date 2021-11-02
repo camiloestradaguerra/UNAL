@@ -4,6 +4,8 @@ import os
 import numpy as np
 import math
 import matplotlib.pyplot as plt
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 import pandas as pd
 import geopandas as gpd
 import gmaps

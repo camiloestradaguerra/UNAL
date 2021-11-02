@@ -1,6 +1,8 @@
 from process import *
 import os
 import timeit
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 import shutup 
 shutup.please()
 
