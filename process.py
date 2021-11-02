@@ -144,9 +144,11 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     with open(filename) as f_obj:
                         for line in f_obj:
                             parametros = np.append(parametros, str(line.rstrip()))
-                        f_inicial_pr = datetime.strptime(parametros[0], date_format_str)
-                        f_final_pr = datetime.strptime(parametros[1], date_format_str)
-                    print(f_inicial_pr, f_final_pr)
+                    f_inicial_pr = datetime.strptime(parametros[0], date_format_str)
+                    f_final_pr = datetime.strptime(parametros[1], date_format_str)
+                    f_inicial_val = datetime.strptime(fecha_inicial, date_format_str)
+                    f_final_val = datetime.strptime(fecha_final, date_format_str)
+                    print(f_inicial_val, f_final_val)
                     #if f_final_pr =
                 
     except Exception as e:
