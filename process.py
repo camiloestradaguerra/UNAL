@@ -151,10 +151,10 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     print(f_final_pr, f_final_val)
                     if f_inicial_pr == f_inicial_val and f_final_pr == f_final_val:
                         print("ok")
-                        filename = "datos_validacion.txt"
+                        filename1 = "datos_validacion.txt"
                         par = np.array([])
                         print(par)
-                        with open(filename) as f_osbj:
+                        with open(filename1) as f_osbj:
                             for line in f_obj:
                                 par = np.append(par, str(line.rstrip()))
                                 print(par)
