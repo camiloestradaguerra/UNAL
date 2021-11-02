@@ -155,9 +155,10 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                         with open(filename) as f_osbj:
                             for line in f_obj:
                                 parameters = np.append(parameters, str(line.rstrip()))
-                        parameters=np.asfarray(parameters,float)
+                        print(parameters)
+                        #parameters=np.asfarray(parameters,float)
                         #validacion = sepp_model.validation_model(parameters[0], parameters[1].)
-                        print(type(parameters[0]), type(parameters[1]))
+                        #print(type(parameters[0]), type(parameters[1]))
                         #print(validacion)
                     #if f_final_pr =
                 
