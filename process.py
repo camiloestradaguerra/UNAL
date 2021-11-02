@@ -7,8 +7,9 @@ import constants_manager as c
 import geopandas as gpd
 import os
 from utilis import *
-import warnings
-warnings.filterwarnings("ignore", category=FutureWarning)
+import shutup 
+shutup.please()
+
 
 sepp_mod = ModeloRinhas()
 
