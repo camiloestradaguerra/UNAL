@@ -63,8 +63,8 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     file.write(str(fecha_final) + '\n')
                     file.close()
                     sepp_model.train_model(datos_eventos)
-                    sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
-                    prediccion = sepp_mod.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    #sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)
                     file = open("fechas_prediccion.txt", "w")
@@ -80,7 +80,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
                     file.close()
                     sepp_model.train_model(datos_eventos)
-                    prediccion = sepp_mod.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
                     file = open("fechas_prediccion.txt", "w")
@@ -112,7 +112,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                 print(type(diff_pr))
                 if diff_pr < 336.0:
                     # Se hace la prediccion
-                    prediccion = sepp_mod.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     # Almacena el df con eventos unicamente en los puntos calientes
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
@@ -148,7 +148,14 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     f_final_pr = datetime.strptime(parametros[1], date_format_str)
                     f_inicial_val = datetime.strptime(fecha_inicial, date_format_str)
                     f_final_val = datetime.strptime(fecha_final, date_format_str)
-                    print(f_inicial_val, f_final_val)
+                    if f_inicial_pr == f_inicial_val and f_inicial_val == f_final_val:
+                        filename = "datos_validacion.txt"
+                        parameters = np.array([])
+                        with open(filename) as f_obj:
+                        for line in f_obj:
+                            parameters = np.append(parameters, str(line.rstrip()))
+                        validacion = sepp_model.validation_model(parameters[0], parameters[1])
+                        print(validacion)
                     #if f_final_pr =
                 
     except Exception as e:
