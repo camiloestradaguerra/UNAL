@@ -134,10 +134,11 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
             ts_ya = datetime.timestamp(ya)
             ts_fecha_final_val = datetime.timestamp(fecha_final_val)
             diff_val = (ts_ya - ts_fecha_final_val)
+            print(diff_val)
             if diff_val > 0:
                 if os.path.exists('./datos_validacion.txt') == False:
                     print("Primero se debe hacer el proceso de prediccion")    
-                else:
+                if os.path.exists('./datos_validacion.txt') == True:
                     print(ok)
                 #    filename = "fechas_prediccion.txt"
                 #    parametros = np.array([])
