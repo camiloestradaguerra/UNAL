@@ -131,8 +131,10 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
             ya = datetime.now()
             date_format_str = '%Y-%m-%d %H:%M:%S'
             fecha_final_val = datetime.strptime(fecha_final, date_format_str)
-            #diff_val = (ya - fecha_final).total_seconds()
-            print(type(ya), type(fecha_final_val))
+            ts_ya = datetime.timestamp(ya)
+            ts_fecha_final_val = datetime.timestamp(fecha_final_val)
+            diff_val = (ts_ya - ts_fecha_final)
+            print(diff_val)
             #if os.path.exists('./datos_validacion.txt') == False:
             #    print("Primero se debe hacer el proceso de prediccion")    
             #else:
