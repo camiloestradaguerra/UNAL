@@ -146,8 +146,9 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     f_final_pr = datetime.strptime(parametros[1], date_format_str)
                     f_inicial_val = datetime.strptime(fecha_inicial, date_format_str)
                     f_final_val = datetime.strptime(fecha_final, date_format_str)
+                    print("ok")
                     if f_inicial_pr == f_inicial_val and f_inicial_val == f_final_val:
-                        print("ok")
+                        
                         filename = "datos_validacion.txt"
                         parameters = np.array([])
                         with open(filename) as f_obj:
