@@ -149,7 +149,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Función ejecución proceso')
     parser.add_argument("--log_file", required=True, help="Dirección archivo de log")
-    parser.add_argument("--subprocess", required=True, help="Subproceso a ejecutar", default="clean", choices=["clean", "train", "predict"])
+    parser.add_argument("--subprocess", required=True, help="Subproceso a ejecutar", default="clean", choices=["clean", "train", "predict", "validation"])
     parser.add_argument("--fecha_inicial", required=True, help="Fecha Inicial para los procesos de clean y train")
     parser.add_argument("--fecha_final", required=True, help="Fecha Final para los procesos de clean y train")
     parser.add_argument("--fecha_inicial_pr", required=False, help="Fecha Inicial para el proceso de prediccion")
