@@ -151,8 +151,9 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     print(f_final_pr, f_final_val)
                     if f_inicial_pr == f_inicial_val and f_final_pr == f_final_val:
                         print("ok")
-                        #filename = "datos_validacion.txt"
-                        #parameters = np.array([])
+                        filename = "datos_validacion.txt"
+                        parameters = np.array([])
+                        print(parameters)
                         #with open(filename) as f_osbj:
                         #    for line in f_obj:
                         #        parameters = np.append(parameters, str(line.rstrip()))
