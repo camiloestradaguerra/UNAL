@@ -142,6 +142,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     with open(filename) as f_obj:
                         for line in f_obj:
                             parametros = np.append(parametros, str(line.rstrip()))
+                    filename.close()
                     f_inicial_pr = datetime.strptime(parametros[0], date_format_str)
                     f_final_pr = datetime.strptime(parametros[1], date_format_str)
                     f_inicial_val = datetime.strptime(fecha_inicial, date_format_str)
@@ -151,13 +152,13 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     print(f_final_pr, f_final_val)
                     if f_inicial_pr == f_inicial_val and f_final_pr == f_final_val:
                         print("ok")
-                        filename1 = "datos_validacion.txt"
-                        par = np.array([])
-                        print(par)
-                        with open(filename1) as f_osbj:
-                            for line in f_obj:
-                                par = np.append(par, str(line.rstrip()))
-                                print(par)
+                        #filename1 = "datos_validacion.txt"
+                        #par = np.array([])
+                        #print(par)
+                        #with open(filename1) as f_osbj:
+                        #    for line in f_obj:
+                        #        par = np.append(par, str(line.rstrip()))
+                        #        print(par)
                         #parameters=np.asfarray(parameters,float)
                         #validacion = sepp_model.validation_model(parameters[0], parameters[1].)
                         #print(type(parameters[0]), type(parameters[1]))
