@@ -127,14 +127,12 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     file.close()
 
         elif subprocess == "validation":
-            print("ok")
             ya = datetime.now()
             date_format_str = '%Y-%m-%d %H:%M:%S'
             fecha_final_val = datetime.strptime(fecha_final, date_format_str)
             ts_ya = datetime.timestamp(ya)
             ts_fecha_final_val = datetime.timestamp(fecha_final_val)
             diff_val = (ts_ya - ts_fecha_final_val)
-            print(diff_val)
             if diff_val > 0:
                 if os.path.exists('./datos_validacion.txt') == False:
                     print("Primero se debe hacer el proceso de prediccion")    
@@ -149,13 +147,14 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     f_inicial_val = datetime.strptime(fecha_inicial, date_format_str)
                     f_final_val = datetime.strptime(fecha_final, date_format_str)
                     if f_inicial_pr == f_inicial_val and f_inicial_val == f_final_val:
+                        print("ok")
                         filename = "datos_validacion.txt"
                         parameters = np.array([])
                         with open(filename) as f_obj:
                             for line in f_obj:
                                 parameters = np.append(parameters, str(line.rstrip()))
-                        validacion = sepp_model.validation_model(parameters[1], parameters[0])
-                        print(validacion)
+                        validacion = sepp_model.validation_model(parameters[0], parameters[1])
+                        print(parameters[0], parameters[1])
                     #if f_final_pr =
                 
     except Exception as e:
