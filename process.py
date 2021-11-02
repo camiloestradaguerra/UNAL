@@ -139,15 +139,14 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                 if os.path.exists('./datos_validacion.txt') == False:
                     print("Primero se debe hacer el proceso de prediccion")    
                 else:
-                    print("ok")
-                #    filename = "fechas_prediccion.txt"
-                #    parametros = np.array([])
-                #    with open(filename) as f_obj:
-                #        for line in f_obj:
-                #            parametros = np.append(parametros, str(line.rstrip()))
-                #        f_inicial_pr = parametros[0]
-                #        f_final_pr = parametros[1]
-                #    print(type(f_inicial_pr), type(fecha_inicial))
+                    filename = "fechas_prediccion.txt"
+                    parametros = np.array([])
+                    with open(filename) as f_obj:
+                        for line in f_obj:
+                            parametros = np.append(parametros, str(line.rstrip()))
+                        f_inicial_pr = parametros[0]
+                        f_final_pr = parametros[1]
+                    print(type(f_inicial_pr), type(fecha_inicial))
                 #    print(type(f_final_pr), type(fecha_final))
     except Exception as e:
         msg_error = "No se completó función process"
