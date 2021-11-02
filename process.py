@@ -134,12 +134,19 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
             ts_ya = datetime.timestamp(ya)
             ts_fecha_final_val = datetime.timestamp(fecha_final_val)
             diff_val = (ts_ya - ts_fecha_final_val)
-            print(diff_val)
-            #if os.path.exists('./datos_validacion.txt') == False:
-            #    print("Primero se debe hacer el proceso de prediccion")    
-            #else:
-            #    datos_eventos = gpd.read_file('eventos_covariados.geojson')
-    
+            if diff_val > 0:
+                if os.path.exists('./datos_validacion.txt') == False:
+                    print("Primero se debe hacer el proceso de prediccion")    
+                elif:
+                    filename = "fechas_prediccion.txt"
+                    parametros = np.array([])
+                    with open(filename) as f_obj:
+                        for line in f_obj:
+                            parametros = np.append(parametros, str(line.rstrip()))
+                        f_inicial_pr = parametros[0]
+                        f_final_pr = parametros[1]
+                    print(type(f_inicial_pr), type(fecha_inicial))
+                    print(type(f_final_pr), type(fecha_final))
     except Exception as e:
         msg_error = "No se completó función process"
         logging.error(msg_error)
