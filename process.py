@@ -154,7 +154,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                                 par = np.append(par, str(line.rstrip()))
                         parameters=np.asfarray(parameters,float)
                         validacion = sepp_model.validation_model(parameters[0], parameters[1])                
-    except Exception as e:
+    except Exception as e: 
         msg_error = "No se completó función process"
         logging.error(msg_error)
         raise Exception(msg_error + " / " +str(e))                 
