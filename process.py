@@ -7,6 +7,8 @@ import constants_manager as c
 import geopandas as gpd
 import os
 from utilis import *
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 sepp_mod = ModeloRinhas()
 
@@ -23,7 +25,6 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
             # Si NO hay hay datos almacenados: Revisa si existe el df con datos y si NO, entonces crea un df 
             #con los datos entre las fechas seleccionadas y entrena el modelo con estos datos
             if os.path.exists('./eventos_covariados.geojson') == False:
-                print("Primero se debe hacer el proceso de Preprocesamiento de Datos.")
                 # Procesa los datos
                 datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
                 # Crea un archivo externo con las fechas seleccionadas para los datos
@@ -52,10 +53,8 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
             # hace un procesamiento de datos entre las fechas seleccionadas, entrena el modelo con estas fechas
             # y luego predice con las fechas ingresadas por el usuario
             if os.path.exists('./parametros_optimizados.txt') == False:
-                print("Primero se debe hacer el proceso de train")
                 # Lo mismo que para el proceso de entrenamiento
                 if os.path.exists('./eventos_covariados.geojson') == False:
-                    print("Primero se debe hacer el proceso de Preprocesamiento de Datos.")
                     sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
                     datos_eventos = gpd.read_file('eventos_covariados.geojson')
                     file = open("fechas_entrenamiento.txt", "w")
@@ -104,12 +103,10 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                         parametros = np.append(parametros, str(line.rstrip()))
                 fecha_inicial_tr = parametros[0]
                 fecha_final_tr = parametros[1]
-                print(fecha_inicial_tr, fecha_final_tr, fecha_inicial_pr, fecha_final_pr)
                 date_format_str = '%Y-%m-%d %H:%M:%S'
                 fecha_final_tr1 = datetime.strptime(fecha_final_tr, date_format_str)
                 fecha_inicial_pr1 = datetime.strptime(fecha_inicial_pr, date_format_str)
                 diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
-                print(type(diff_pr))
                 if diff_pr < 336.0:
                     # Se hace la prediccion
                     prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
