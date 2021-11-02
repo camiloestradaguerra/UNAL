@@ -138,7 +138,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
             if diff_val > 0:
                 if os.path.exists('./datos_validacion.txt') == False:
                     print("Primero se debe hacer el proceso de prediccion")    
-                if os.path.exists('./datos_validacion.txt') == True:
+                else:
                     print("ok")
                 #    filename = "fechas_prediccion.txt"
                 #    parametros = np.array([])
