@@ -148,14 +148,14 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     f_final_val = datetime.strptime(fecha_final, date_format_str)
                     print("ok")
                     print(f_inicial_pr, f_inicial_val)
-                    print(f_inicial_val, f_inicial_val)
+                    print(f_final_pr, f_final_val)
                     if f_inicial_pr == f_inicial_val and f_final_pr == f_final_val:
                         filename = "datos_validacion.txt"
                         parameters = np.array([])
-                        with open(filename) as f_obj:
+                        with open(filename) as f_osbj:
                             for line in f_obj:
                                 parameters = np.append(parameters, str(line.rstrip()))
-                        validacion = sepp_model.validation_model(parameters[0], parameters[1])
+                        validacion = sepp_model.validation_model(parameters[0].astype(np.float), parameters[1].astype(np.float))
                         print(parameters[0], parameters[1])
                         print(validacion)
                     #if f_final_pr =
