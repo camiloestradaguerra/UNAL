@@ -138,10 +138,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
             #    print("Primero se debe hacer el proceso de prediccion")    
             #else:
             #    datos_eventos = gpd.read_file('eventos_covariados.geojson')
-
-
-            
-
+    
     except Exception as e:
         msg_error = "No se completó función process"
         logging.error(msg_error)
