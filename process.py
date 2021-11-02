@@ -154,7 +154,7 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                         with open(filename) as f_obj:
                             for line in f_obj:
                                 parameters = np.append(parameters, str(line.rstrip()))
-                        validacion = sepp_model.validation_model(parameters[0], parameters[1])
+                        validacion = sepp_model.validation_model(parameters[1], parameters[0])
                         print(validacion)
                     #if f_final_pr =
                 
