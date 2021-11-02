@@ -144,10 +144,11 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
                     with open(filename) as f_obj:
                         for line in f_obj:
                             parametros = np.append(parametros, str(line.rstrip()))
-                        f_inicial_pr = parametros[0]
-                        f_final_pr = parametros[1]
-                    print(type(f_inicial_pr), type(fecha_inicial))
-                #    print(type(f_final_pr), type(fecha_final))
+                        f_inicial_pr = datetime.strptime(parametros[0], date_format_str)
+                        f_final_pr = datetime.strptime(parametros[1], date_format_str)
+                    print(f_inicial_pr, f_final_pr)
+                    #if f_final_pr =
+                
     except Exception as e:
         msg_error = "No se completó función process"
         logging.error(msg_error)
