@@ -1,7 +1,8 @@
 from process import *
 import os
 import timeit
-
+import shutup 
+shutup.please()
 
 
 def example1():

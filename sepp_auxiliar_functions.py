@@ -43,7 +43,8 @@ from pyspark.sql import SparkSession
 import pandas as pd
 from datetime import datetime, date
 from pyspark.sql import Row
-
+import shutup 
+shutup.please()
 
 def cells_on_map(b1, h1):
     """

@@ -38,6 +38,8 @@ import pandas as pd
 from datetime import timedelta, datetime
 from utilis import get_estados_ejecucion, get_tipos_proceso, get_token_acces, update_process_state
 from constants_manager import ESTADO_EXITO, ESTADO_ERROR, ESTADO_PROCESO, ESTADO_CANCELADO, NAME_PREDICCION, NAME_ENTRENAMIENTO, NAME_PREPROCESAMIENTO, NAME_VALIDACION
+import shutup 
+shutup.please()
 
 class ModeloBase:
 
