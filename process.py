@@ -15,11 +15,20 @@ shutup.please()
 
 sepp_mod = ModeloRinhas()
 
-def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr, fecha_final_pr):
+def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr, fecha_final_pr):
     logging.basicConfig(filename=log_file,level=logging.DEBUG)
     logging.debug('Empezó función process.')
 
     try:
+        locals_=locals()
+        summary = open(summary_file,"w")
+        summary.write("Ejecución proceso modelo Percepción de Seguridad \n")
+        summary.write("Fecha: "+str(datetime.now())+"\n")
+        summary.write("Variables de entrada: \n")
+        for i in locals_:
+            if locals_[i] != None:
+                summary.write(str(i)+": "+str(locals_[i])+"\n")
+        summary.close()        
         sepp_model = ModeloRinhas()
         
         if sub_process == "poligonos_covariados":
@@ -166,14 +175,17 @@ def process(log_file, sub_process, fecha_inicial, fecha_final, fecha_inicial_pr,
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Función ejecución proceso')
     parser.add_argument("--log_file", required=True, help="Dirección archivo de log")
+    parser.add_argument("--summary_file",required=True,help="Dirección archivo resumen procesos")
     parser.add_argument("--subprocess", required=True, help="Subproceso a ejecutar", default="clean", choices=["poligonos_covariados","clean", "train", "predict", "validation"])
     parser.add_argument("--fecha_inicial", required=True, help="Fecha Inicial para los procesos de clean y train")
     parser.add_argument("--fecha_final", required=True, help="Fecha Final para los procesos de clean y train")
     parser.add_argument("--fecha_inicial_pr", required=False, help="Fecha Inicial para el proceso de prediccion")
     parser.add_argument("--fecha_final_pr", required=False, help="Fecha Final para el proceso de prediccion")
+    
     args = parser.parse_args()
-    subprocess=args.subprocess
     log_file = args.log_file
+    summary_file = args.summary_file
+    subprocess=args.subprocess
     fecha_inicial = args.fecha_inicial
     fecha_final = args.fecha_final
     fecha_inicial_pr = args.fecha_inicial_pr
