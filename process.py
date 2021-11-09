@@ -184,8 +184,8 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     log_file = args.log_file
-    summary_file = args.summary_file
-    #subprocess = args.subprocess
+    #summary_file = args.summary_file
+    subprocess = args.subprocess
     fecha_inicial = args.fecha_inicial
     fecha_final = args.fecha_final
     fecha_inicial_pr = args.fecha_inicial_pr
