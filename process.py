@@ -44,7 +44,11 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
             #con los datos entre las fechas seleccionadas y entrena el modelo con estos datos
             if os.path.exists('./eventos_covariados.geojson') == False:
                 # Procesa los datos
-                datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
+                datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
+                log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
+                log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
+                summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
+                summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
                 # Crea un archivo externo con las fechas seleccionadas para los datos
                 file = open("fechas_entrenamiento.txt", "w")
                 file.write(str(fecha_inicial) + '\n')
@@ -63,7 +67,10 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
                 file.close()
                 # Entrena el modelo con los datos y crea un archivo con los parametros optimizados
-                sepp_model.train_model(datos_eventos)
+                parametros_opt = sepp_model.train_model(datos_eventos)
+                summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
+                summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
+                summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
         
         elif subprocess == "predict":
             # Si NO hay un modelo ya previamente entrenado: Revisa si existe el archivo parametros_optimizados
