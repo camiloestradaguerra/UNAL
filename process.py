@@ -62,6 +62,8 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 # Lee los el df con los datos
                 datos_eventos = gpd.read_file('eventos_covariados.geojson')
                 # Crea el archivo externo con las fechas inicial y final de los datos
+                def FECHA_mod(txt):
+                    return txt.replace("T"," ")
                 file = open("fechas_entrenamiento.txt", "w")
                 file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
                 file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
