@@ -108,7 +108,9 @@ class ModeloRinhas(ModeloBase):
             fecha_inicial = datetime.strptime(fecha_inicial, date_format_str)
             fecha_final = datetime.strptime(fecha_final, date_format_str)
             datos_eventos_servidor = cleaning(fecha_inicial, fecha_final)
+            long_datos_eventos_servidor = len(datos_eventos_servidor)
             datos_eventos_servidor_limpios = limpieza_datos(datos_eventos_servidor)
+            long_datos_eventos_servidor_limpios = len(datos_eventos_servidor_limpios)
             def FECHA_mod(txt):
                 return txt.replace("T"," ")
             datos_eventos_servidor_limpios['FECHA'] = datos_eventos_servidor_limpios['FECHA'].map(FECHA_mod)
@@ -116,7 +118,7 @@ class ModeloRinhas(ModeloBase):
             eventos_cov.to_file("eventos_covariados.geojson", driver='GeoJSON')
             logging.debug("Termina el preprocesamiento de los datos para el modelo de rinas de seguridad.")
             update_process_state(self.tipos_proceso[NAME_PREPROCESAMIENTO], self.estados_ejecucion[ESTADO_EXITO], get_token_acces())
-            return eventos_cov
+            return eventos_cov, long_datos_eventos_servidor, long_datos_eventos_servidor_limpios
         
         except Exception as e:
             update_process_state(self.tipos_proceso[NAME_PREPROCESAMIENTO], self.estados_ejecucion[ESTADO_ERROR], get_token_acces())

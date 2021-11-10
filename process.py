@@ -28,15 +28,17 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
         for i in locals_:
             if locals_[i] != None:
                 summary.write(str(i)+": "+str(locals_[i])+"\n")
-        summary.close()        
+               
         sepp_model = ModeloRinhas()
         
         if sub_process == "poligonos_covariados":
             cells_on_map(300,300)
 
         elif sub_process == "clean":
-            sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
-            
+            log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
+            log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
+            summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
+            summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
         elif subprocess == "train":
             # Si NO hay hay datos almacenados: Revisa si existe el df con datos y si NO, entonces crea un df 
             #con los datos entre las fechas seleccionadas y entrena el modelo con estos datos
