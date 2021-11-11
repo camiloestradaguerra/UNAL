@@ -39,10 +39,11 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
         elif sub_process == "clean":
             log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
             log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
-            summary = open(summary_file,"w")
-            summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
-            summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
+            with open(summary_file,"a") as summary:
+                summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
+                summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
             summary.close()
+            
         elif subprocess == "train":
             # Si NO hay hay datos almacenados: Revisa si existe el df con datos y si NO, entonces crea un df 
             #con los datos entre las fechas seleccionadas y entrena el modelo con estos datos
@@ -51,9 +52,6 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[0]
                 log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
                 log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
-                summary = open(summary_file,"w")
-                summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
-                summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
                 # Crea un archivo externo con las fechas seleccionadas para los datos
                 file = open("fechas_entrenamiento.txt", "w")
                 file.write(str(fecha_inicial) + '\n')
@@ -61,9 +59,12 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 file.close()
                 # Entrena el modelo y crea un archivo con los parametros optimizados
                 parametros_opt = sepp_model.train_model(datos_eventos)
-                summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
-                summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
-                summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
+                with open(summary_file,"a") as summary:
+                    summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
+                    summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
+                    summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
+                    summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
+                    summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
                 summary.close()
             # Si SI hay un modelo entrenado: Carga los datos y entrena con los datos que hayan en 
             # eventos_covariados y crea un archivo externo con las fechas inicial y final de estos datos
