@@ -1,5 +1,6 @@
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
+warnings.filterwarnings(action='ignore', category=RuntimeWarning) 
 import sys
 from class_sepp_model import *
 from sepp_auxiliar_functions import *
@@ -38,7 +39,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
         elif sub_process == "clean":
             log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
             log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
-            summary = open(summary_file,"a")
+            summary = open(summary_file,"w")
             summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
             summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
             summary.close()
@@ -47,10 +48,10 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
             #con los datos entre las fechas seleccionadas y entrena el modelo con estos datos
             if os.path.exists('./eventos_covariados.geojson') == False:
                 # Procesa los datos
-                datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
+                datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[0]
                 log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
                 log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
-                summary = open(summary_file,"a")
+                summary = open(summary_file,"w")
                 summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
                 summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
                 # Crea un archivo externo con las fechas seleccionadas para los datos
@@ -92,22 +93,22 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
             if os.path.exists('./parametros_optimizados.txt') == False:
                 # Lo mismo que para el proceso de entrenamiento
                 if os.path.exists('./eventos_covariados.geojson') == False:
-                    datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
+                    datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[0]
                     log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
                     log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
-                    datos_eventos = gpd.read_file('eventos_covariados.geojson')
-                    #summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
-                    #summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
+                    summary = open(summary_file,"w")
+                    summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
+                    summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
                     file = open("fechas_entrenamiento.txt", "w")
                     file.write(str(fecha_inicial) + '\n')
                     file.write(str(fecha_final) + '\n')
                     file.close()
                     parametros_opt = sepp_model.train_model(datos_eventos)
-                    #sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
+                    summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
+                    summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
+                    summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
+                    summary.close()
                     prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
-                    #summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
-                    #summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
-                    #summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)
                     file = open("fechas_prediccion.txt", "w")
@@ -123,9 +124,11 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                     file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
                     file.close()
                     parametros_opt = sepp_model.train_model(datos_eventos)
-                    #summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
-                    #summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
-                    #summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
+                    with open(summary_file,"a") as summary:
+                        summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
+                        summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
+                        summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
+                        summary.close()
                     prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            

@@ -3,6 +3,7 @@ import os
 import timeit
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
+warnings.filterwarnings(action='ignore', category=RuntimeWarning) 
 import shutup 
 shutup.please()
 
