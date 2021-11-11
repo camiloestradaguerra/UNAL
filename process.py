@@ -49,9 +49,10 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
             #con los datos entre las fechas seleccionadas y entrena el modelo con estos datos
             if os.path.exists('./eventos_covariados.geojson') == False:
                 # Procesa los datos
-                datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[0]
-                log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
-                log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
+                proceso_train_a = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
+                datos_eventos = proceso_train_a[0]
+                log_datos_sin_limpiar = proceso_train_a[1]
+                log_datos_limpios = proceso_train_a[2]
                 # Crea un archivo externo con las fechas seleccionadas para los datos
                 file = open("fechas_entrenamiento.txt", "w")
                 file.write(str(fecha_inicial) + '\n')
