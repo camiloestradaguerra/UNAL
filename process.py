@@ -110,8 +110,8 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                     summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
                     summary.close()
                     with open(filename) as f_obj:
-                    for line in f_obj:
-                        parametros = np.append(parametros, str(line.rstrip()))
+                        for line in f_obj:
+                            parametros = np.append(parametros, str(line.rstrip()))
                     fecha_inicial_tr = parametros[0]
                     fecha_final_tr = parametros[1]
                     date_format_str = '%Y-%m-%d %H:%M:%S'
