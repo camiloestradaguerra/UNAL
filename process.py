@@ -61,8 +61,6 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 # Entrena el modelo y crea un archivo con los parametros optimizados
                 parametros_opt = sepp_model.train_model(datos_eventos)
                 with open(summary_file,"a") as summary:
-                    summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
-                    summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
                     summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
                     summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
                     summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
