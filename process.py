@@ -265,9 +265,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                                 summary = open(summary_file,"a")
                                 summary.write("Valor de validación: "+str(val) +"\n")
                                 summary.close()
-                                
-
-
+                         
                         else:
                             datos_eventos = gpd.read_file('eventos_covariados.geojson')
                             file = open("fechas_entrenamiento.tx", "w")
