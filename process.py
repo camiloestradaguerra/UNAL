@@ -220,38 +220,38 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
             if diff_val > 0:
                 if os.path.exists('./datos_validacion.txt') == False:
                     if os.path.exists('./parametros_optimizados.txt') == False:
-                # Lo mismo que para el proceso de entrenamiento
+                        # Lo mismo que para el proceso de entrenamiento
                         if os.path.exists('./eventos_covariados.geojson') == False:
                             datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[0]
                             log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
                             log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
                             parametros_opt = sepp_model.train_model(datos_eventos)
                             print(parametros_opt)
-                            summary = open(summary_file,"a")
-                            summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
-                            summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
-                            summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
-                            summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
-                            summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
-                            summary.close()
-                            file = open("fechas_entrenamiento.txt", "w")
-                            file.write(str(fecha_inicial) + '\n')
-                            file.write(str(fecha_final) + '\n')
-                            file.close()
-                            filename = "fechas_entrenamiento.txt"
-                            print('Pasó por aquí')
-                            parametros = np.array([])
-                            with open(filename) as f_obj:
-                                for line in f_obj:
-                                    parametros = np.append(parametros, str(line.rstrip()))
-                            fecha_inicial_tr = parametros[0]
-                            fecha_final_tr = parametros[1]
-                            date_format_str = '%Y-%m-%d %H:%M:%S'
-                            fecha_final_tr1 = datetime.strptime(fecha_final_tr, date_format_str)
-                            fecha_inicial_pr1 = datetime.strptime(fecha_inicial_pr, date_format_str)
-                            diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
-                            print("Espero que pase por aqui")
-                            if diff_pr < 336.0:
+                            #summary = open(summary_file,"a")
+                            #summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
+                            #summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
+                            #summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
+                            #summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
+                            #summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
+                            #summary.close()
+                            #file = open("fechas_entrenamiento.txt", "w")
+                            #file.write(str(fecha_inicial) + '\n')
+                            #file.write(str(fecha_final) + '\n')
+                            #file.close()
+                            #filename = "fechas_entrenamiento.txt"
+                            #print('Pasó por aquí')
+                            #parametros = np.array([])
+                            #with open(filename) as f_obj:
+                            #    for line in f_obj:
+                            #        parametros = np.append(parametros, str(line.rstrip()))
+                            #fecha_inicial_tr = parametros[0]
+                            #fecha_final_tr = parametros[1]
+                            #date_format_str = '%Y-%m-%d %H:%M:%S'
+                            #fecha_final_tr1 = datetime.strptime(fecha_final_tr, date_format_str)
+                            #fecha_inicial_pr1 = datetime.strptime(fecha_inicial_pr, date_format_str)
+                            #diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
+                            #print("Espero que pase por aqui")
+                            #if diff_pr < 336.0:
                                 # Se hace la prediccion
                                 prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
                                 array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
@@ -268,27 +268,27 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                                 summary.write("Valor de validación: "+str(val) +"\n")
                                 summary.close()
                          
-                        else:
-                            datos_eventos = gpd.read_file('eventos_covariados.geojson')
-                            file = open("fechas_entrenamiento.txt", "w")
-                            def FECHA_mod(txt):
-                                return txt.replace("T"," ")
-                            file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
-                            file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
-                            file.close()
-                            parametros_opt = sepp_model.train_model(datos_eventos)
-                            with open(summary_file,"a") as summary:
-                                summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
-                                summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
-                                summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
-                                summary.close()
-                            prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
-                            array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
-                            fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
-                            file = open("fechas_prediccion.txt", "w")
-                            file.write(str(fecha_inicial_pr) + '\n')
-                            file.write(str(fecha_final_pr) + '\n')
-                            file.close()
+                        #else:
+                    #    datos_eventos = gpd.read_file('eventos_covariados.geojson')
+                        #    file = open("fechas_entrenamiento.txt", "w")
+                        #    def FECHA_mod(txt):
+                        #        return txt.replace("T"," ")
+                        #    file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
+                        #    file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
+                        #    file.close()
+                        #    parametros_opt = sepp_model.train_model(datos_eventos)
+                        #    with open(summary_file,"a") as summary:
+                        #        summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
+                        #        summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
+                        #        summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
+                        #        summary.close()
+                        #    prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
+                        #    array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
+                        #    fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
+                        #    file = open("fechas_prediccion.txt", "w")
+                        #    file.write(str(fecha_inicial_pr) + '\n')
+                        #    file.write(str(fecha_final_pr) + '\n')
+                        #    file.close()
             # Si SI hay un modelo ya previamente entrenado: Revisa si existe el archivo parametros_optimizados
             # (NO). Luego revisa si están por lo menos los datos eventos_covariados, y si no estan, entonces
             # hace un procesamiento de datos entre las fechas seleccionadas, entrena el modelo con estas fechas
