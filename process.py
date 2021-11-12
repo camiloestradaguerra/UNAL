@@ -248,6 +248,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                             fecha_final_tr1 = datetime.strptime(fecha_final_tr, date_format_str)
                             fecha_inicial_pr1 = datetime.strptime(fecha_inicial_pr, date_format_str)
                             diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
+                            print("Espero que pase por aqui")
                             if diff_pr < 336.0:
                                 # Se hace la prediccion
                                 prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
@@ -260,8 +261,10 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                                 file.write(str(fecha_final_pr) + '\n')
                                 file.close()
                                 val = fil[0]/fil[1]
+                                print("Espero que pase por aqui tambien y escriba")
                                 summary = open(summary_file,"a")
                                 summary.write("Valor de validación: "+str(val) +"\n")
+                                summary.close()
                                 
 
 
