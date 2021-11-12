@@ -108,6 +108,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                     summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
                     summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
                     summary.close()
+                    parametros = np.array([])
                     with open(filename) as f_obj:
                         for line in f_obj:
                             parametros = np.append(parametros, str(line.rstrip()))
