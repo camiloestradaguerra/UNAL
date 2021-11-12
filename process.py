@@ -136,7 +136,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
 
                 else:
                     datos_eventos = gpd.read_file('eventos_covariados.geojson')
-                    file = open("fechas_entrenamiento.tx", "w")
+                    file = open("fechas_entrenamiento.txt", "w")
                     def FECHA_mod(txt):
                         return txt.replace("T"," ")
                     file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
@@ -269,7 +269,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                          
                         else:
                             datos_eventos = gpd.read_file('eventos_covariados.geojson')
-                            file = open("fechas_entrenamiento.tx", "w")
+                            file = open("fechas_entrenamiento.txt", "w")
                             def FECHA_mod(txt):
                                 return txt.replace("T"," ")
                             file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
