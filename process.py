@@ -246,10 +246,11 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                             date_format_str = '%Y-%m-%d %H:%M:%S'
                             fecha_final_tr1 = datetime.strptime(fecha_final_tr, date_format_str)
                             fecha_inicial_pr1 = datetime.strptime(fecha_inicial_pr, date_format_str)
+                            fecha_final_pr1 = datetime.strptime(fecha_final_pr, date_format_str)
                             diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
                             if diff_pr < 336.0:
                                 # Se hace la prediccion
-                                prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
+                                prediccion = sepp_model.predict_model(fecha_inicial_pr1, fecha_final_pr1)
                                 array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                                 # Almacena el df con eventos unicamente en los puntos calientes
                                 fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
