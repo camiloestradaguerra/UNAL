@@ -231,9 +231,11 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                             print('6')
                             log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
                             print('7')
-                            parametros_opt = sepp_model.train_model(datos_eventos)
+                            sepp_model.train_model(datos_eventos)
                             print('8')
-                            print(parametros_opt)
+                            print(sepp_model.train_model(datos_eventos)[0])
+                            print(sepp_model.train_model(datos_eventos)[1])
+                            print(sepp_model.train_model(datos_eventos)[2])
                             summary = open(summary_file,"a")
                             summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
                             summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
