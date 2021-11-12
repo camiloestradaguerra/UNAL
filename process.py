@@ -259,8 +259,9 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                                 file.write(str(fecha_final_pr) + '\n')
                                 file.close()
                                 val = fil[0]/fil[1]
+                                print(val)
                                 summary = open(summary_file,"a")
-                                summary.write("Valor de validación: "+str(val) +"\n")
+                                summary.write("Valor de validación: "+str(validation) +"\n")
                                 summary.close()
                          
                         #else:

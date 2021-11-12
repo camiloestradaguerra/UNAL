@@ -452,7 +452,7 @@ class ModeloRinhas(ModeloBase):
             file.close()  
             logging.debug("Termina la validacion de datos para el modelo de rinas de seguridad.")
             update_process_state(self.tipos_proceso[NAME_VALIDACION], self.estados_ejecucion[ESTADO_EXITO], get_token_acces())
-            return  hr
+            return  h_r
         except Exception as e:
             update_process_state(self.tipos_proceso[NAME_VALIDACION], self.estados_ejecucion[ESTADO_ERROR], get_token_acces())
             msg_error = "No se completo la validacion de datos para el modelo de rinas de seguridad."   
