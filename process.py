@@ -218,15 +218,22 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
             ts_fecha_final_val = datetime.timestamp(fecha_final_val)
             diff_val = (ts_ya - ts_fecha_final_val)
             if diff_val > 0:
+                print('1')
                 if os.path.exists('./datos_validacion.txt') == False:
+                    print('2')
                     if os.path.exists('./parametros_optimizados.txt') == False:
-                        # Lo mismo que para el proceso de entrenamiento
+                        print('3')
                         if os.path.exists('./eventos_covariados.geojson') == False:
+                            print('4')
                             datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[0]
+                            print('5')
                             log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
+                            print('6')
                             log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
+                            print('7')
                             parametros_opt = sepp_model.train_model(datos_eventos)
-                            print(parametros_opt)
+                            print('8')
+                            #print(parametros_opt)
                             #summary = open(summary_file,"a")
                             #summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
                             #summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
