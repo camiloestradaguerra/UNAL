@@ -144,11 +144,13 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                     file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
                     file.close()
                     parametros_opt = sepp_model.train_model(datos_eventos)
+                    print('Parece que no estuviera grabando nada')
                     with open(summary_file,"a") as summary:
                         summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
                         summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
                         summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
                         summary.close()
+                    print('Que pasa aqui que no abre este documento')
                     filename = "fechas_entrenamiento.txt"
                     parametros = np.array([])
                     with open(filename) as f_obj:
