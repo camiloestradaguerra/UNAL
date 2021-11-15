@@ -274,7 +274,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                                 val = 100.0*fil[0]/fil[1]
                                 print('Llegué aquí5')
                                 summary = open(summary_file,"a")
-                                summary.write("Valor de validación: "+str(validation) +"\n")
+                                summary.write("Valor de validación: "+str(val) +"\n")
                                 summary.close()
                                 print('Llegué aquí6')
                         else:
@@ -322,7 +322,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                                 val = 100.0*fil[0]/fil[1]
                                 print('Llegué aquí3')
                                 summary = open(summary_file,"a")
-                                summary.write("Valor de validación: "+str(validation) +"\n")
+                                summary.write("Valor de validación: "+str(val) +"\n")
                                 summary.close()
                                 print('Llegué aquí4')
                             #    prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
