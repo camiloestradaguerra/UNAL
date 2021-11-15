@@ -197,22 +197,19 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
                 if diff_pr < 336.0:
                     # Se hace la prediccion
-                    print('Llegué al final1')
                     prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
                     array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     # Almacena el df con eventos unicamente en los puntos calientes
                     fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
-                    print('Llegué al final2')
                     file = open("fechas_prediccion.txt", "w")
                     file.write(str(fecha_inicial_pr) + '\n')
                     file.write(str(fecha_final_pr) + '\n')
                     file.close()
-                    print('Llegué al final3')
                     file = open("datos_validacion.txt", "w")
                     file.write(str(fil[0]) + '\n')
                     file.write(str(fil[1]) + '\n')
                     file.close()
-                    print('Llegué al final4')
+                    
 
         elif subprocess == "validation":
             ya = datetime.now()
