@@ -485,7 +485,11 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
     puntos_gdf_cells_4326['TimeStamp'] = pd.to_datetime(puntos_gdf_cells_4326['TimeStamp'], unit='h',origin=pd.Timestamp(init_date))
     puntos_gdf_cells_4326 = puntos_gdf_cells_4326[['TimeStamp','geometry']]
     puntos_gdf_cells_4326 = puntos_gdf_cells_4326.rename(columns={'TimeStamp':'Fecha'})
-    
+    def FECHA_mod(txt):
+        return txt.replace("T"," ")
+    #puntos_gdf_cells_4326.FECHA = FECHA_mod(str(datos_eventos.FECHA.iloc[0])
+    #file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
+    #file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
     puntos_gdf_cells_4326.to_file("predicted_events.geojson", driver='GeoJSON')
     
     number_ev_pred_on_hotspots = np.array([])
