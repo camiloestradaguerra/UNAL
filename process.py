@@ -295,72 +295,72 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
             # (NO). Luego revisa si están por lo menos los datos eventos_covariados, y si no estan, entonces
             # hace un procesamiento de datos entre las fechas seleccionadas, entrena el modelo con estas fechas
             # y luego predice con las fechas ingresadas por el usuario
-            else:
+            #else:
                 # Carga de los datos con los que se entreno el modelo
-                datos_eventos = gpd.read_file('eventos_covariados.geojson')
+               # datos_eventos = gpd.read_file('eventos_covariados.geojson')
                 # Se leen las fechas inicial y final con las que se entreno el modelo. Si hay una diferencia mayor
                 # a 2 semanas entre la fecha inicial de prediccion y la fecha final del entrenamiento, entonces 
                 # toca entrenar con datos nuevos
-                filename = "fechas_entrenamiento.txt"
-                parametros = np.array([])
-                with open(filename) as f_obj:
-                    for line in f_obj:
-                        parametros = np.append(parametros, str(line.rstrip()))
-                fecha_inicial_tr = parametros[0]
-                fecha_final_tr = parametros[1]
-                date_format_str = '%Y-%m-%d %H:%M:%S'
-                fecha_final_tr1 = datetime.strptime(fecha_final_tr, date_format_str)
-                fecha_inicial_pr1 = datetime.strptime(fecha_inicial_pr, date_format_str)
-                diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
-                if diff_pr < 336.0:
+                #filename = "fechas_entrenamiento.txt"
+                #parametros = np.array([])
+                #with open(filename) as f_obj:
+                #    for line in f_obj:
+                #        parametros = np.append(parametros, str(line.rstrip()))
+                #fecha_inicial_tr = parametros[0]
+                #fecha_final_tr = parametros[1]
+                #date_format_str = '%Y-%m-%d %H:%M:%S'
+                #fecha_final_tr1 = datetime.strptime(fecha_final_tr, date_format_str)
+                #fecha_inicial_pr1 = datetime.strptime(fecha_inicial_pr, date_format_str)
+                #diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
+                #if diff_pr < 336.0:
                     # Se hace la prediccion
-                    prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
-                    array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
+                 #   prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
+                 #   array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     # Almacena el df con eventos unicamente en los puntos calientes
-                    fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
+                  #  fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
                     #validation = sepp_mod.validation_model(fil[0], fil[1])
-                    file = open("fechas_prediccion.txt", "w")
-                    file.write(str(fecha_inicial_pr) + '\n')
-                    file.write(str(fecha_final_pr) + '\n')
-                    file.close()
-                    file = open("datos_validacion.txt", "w")
-                    file.write(str(fil[0]) + '\n')
-                    file.write(str(fil[1]) + '\n')
-                    file.close()
-                    param = np.array([])
-                    with open(filename) as f_obj:
-                        for line in f_obj:
-                            param = np.append(param, str(line.rstrip()))
-                    f_inicial_pr = datetime.strptime(param[0], date_format_str)
-                    f_final_pr = datetime.strptime(param[1], date_format_str)
-                    f_inicial_val = datetime.strptime(fecha_inicial, date_format_str)
-                    f_final_val = datetime.strptime(fecha_final, date_format_str)
-                    if f_inicial_pr == f_inicial_val and f_final_pr == f_final_val:
-                        filename = "datos_validacion.txt"
-                        par = np.array([])
-                        with open(filename) as f_obj:
-                            for line in f_obj:
-                                par = np.append(par, str(line.rstrip()))
-                        par=np.asfarray(par,float)
-                        validacion = sepp_model.validation_model(par[0], par[1])  
-                else:
-                    filename = "fechas_prediccion.txt"
-                    parametros = np.array([])
-                    with open(filename) as f_obj:
-                        for line in f_obj:
-                            parametros = np.append(parametros, str(line.rstrip()))
-                    f_inicial_pr = datetime.strptime(parametros[0], date_format_str)
-                    f_final_pr = datetime.strptime(parametros[1], date_format_str)
-                    f_inicial_val = datetime.strptime(fecha_inicial, date_format_str)
-                    f_final_val = datetime.strptime(fecha_final, date_format_str)
-                    if f_inicial_pr == f_inicial_val and f_final_pr == f_final_val:
-                        filename = "datos_validacion.txt"
-                        par = np.array([])
-                        with open(filename) as f_obj:
-                            for line in f_obj:
-                                par = np.append(par, str(line.rstrip()))
-                        par=np.asfarray(par,float)
-                        validacion = sepp_model.validation_model(par[0], par[1])                
+                   # file = open("fechas_prediccion.txt", "w")
+                   # file.write(str(fecha_inicial_pr) + '\n')
+                   # file.write(str(fecha_final_pr) + '\n')
+                  #  file.close()
+                  #  file = open("datos_validacion.txt", "w")
+                  #  file.write(str(fil[0]) + '\n')
+                  #  file.write(str(fil[1]) + '\n')
+                  #  file.close()
+                  #  param = np.array([])
+                  #  with open(filename) as f_obj:
+                  #      for line in f_obj:
+                  #          param = np.append(param, str(line.rstrip()))
+                  #  f_inicial_pr = datetime.strptime(param[0], date_format_str)
+                  #  f_final_pr = datetime.strptime(param[1], date_format_str)
+                  #  f_inicial_val = datetime.strptime(fecha_inicial, date_format_str)
+                  #  f_final_val = datetime.strptime(fecha_final, date_format_str)
+                  #  if f_inicial_pr == f_inicial_val and f_final_pr == f_final_val:
+                  #      filename = "datos_validacion.txt"
+                  #      par = np.array([])
+                  #      with open(filename) as f_obj:
+                  #          for line in f_obj:
+                  #              par = np.append(par, str(line.rstrip()))
+                  #      par=np.asfarray(par,float)
+                  #      validacion = sepp_model.validation_model(par[0], par[1])  
+                #else:
+                #    filename = "fechas_prediccion.txt"
+                #    parametros = np.array([])
+                #    with open(filename) as f_obj:
+                #        for line in f_obj:
+                #            parametros = np.append(parametros, str(line.rstrip()))
+                #    f_inicial_pr = datetime.strptime(parametros[0], date_format_str)
+                #    f_final_pr = datetime.strptime(parametros[1], date_format_str)
+                #    f_inicial_val = datetime.strptime(fecha_inicial, date_format_str)
+                #    f_final_val = datetime.strptime(fecha_final, date_format_str)
+                #    if f_inicial_pr == f_inicial_val and f_final_pr == f_final_val:
+                #        filename = "datos_validacion.txt"
+                #        par = np.array([])
+                #        with open(filename) as f_obj:
+                #            for line in f_obj:
+                #                par = np.append(par, str(line.rstrip()))
+                #        par=np.asfarray(par,float)
+                #        validacion = sepp_model.validation_model(par[0], par[1])                
     except Exception as e:
         msg_error = "No se completó función process"
         logging.error(msg_error)
