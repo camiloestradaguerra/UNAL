@@ -207,13 +207,13 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                     file.write(str(fecha_inicial_pr) + '\n')
                     file.write(str(fecha_final_pr) + '\n')
                     file.close()
-                    rint('Llegué al final3')
+                    print('Llegué al final3')
                     file = open("datos_validacion.txt", "w")
                     file.write(str(fil[0]) + '\n')
                     file.write(str(fil[1]) + '\n')
                     file.close()
                     print('Llegué al final4')
-                    
+
         elif subprocess == "validation":
             ya = datetime.now()
             date_format_str = '%Y-%m-%d %H:%M:%S'
