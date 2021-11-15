@@ -271,27 +271,61 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                                 print('Llegué aquí3')
                                 validation = sepp_mod.validation_model(fil[0], fil[1])
                                 print('Llegué aquí4')
-                                val = fil[0]/fil[1]
+                                val = 100.0*fil[0]/fil[1]
                                 print('Llegué aquí5')
                                 summary = open(summary_file,"a")
                                 summary.write("Valor de validación: "+str(validation) +"\n")
                                 summary.close()
                                 print('Llegué aquí6')
-                        #else:
-                    #    datos_eventos = gpd.read_file('eventos_covariados.geojson')
-                        #    file = open("fechas_entrenamiento.txt", "w")
-                        #    def FECHA_mod(txt):
-                        #        return txt.replace("T"," ")
-                        #    file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
-                        #    file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
-                        #    file.close()
-                        #    parametros_opt = sepp_model.train_model(datos_eventos)
-                        #    with open(summary_file,"a") as summary:
-                        #        summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
-                        #        summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
-                        #        summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
-                        #        summary.close()
-                        #    prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
+                        else:
+                            datos_eventos = gpd.read_file('eventos_covariados.geojson')
+                            file = open("fechas_entrenamiento.txt", "w")
+                            def FECHA_mod(txt):
+                                return txt.replace("T"," ")
+                            file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
+                            file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
+                            file.close()
+                            parametros_opt = sepp_model.train_model(datos_eventos)
+                            with open(summary_file,"a") as summary:
+                                summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
+                                summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
+                                summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
+                                summary.close()
+                            filename = "fechas_entrenamiento.txt"
+                            parametros = np.array([])
+                            with open(filename) as f_obj:
+                                for line in f_obj:
+                                    parametros = np.append(parametros, str(line.rstrip()))
+                            fecha_inicial_tr = parametros[0]
+                            fecha_final_tr = parametros[1]
+                            date_format_str = '%Y-%m-%d %H:%M:%S'
+                            fecha_final_tr1 = datetime.strptime(fecha_final_tr, date_format_str)
+                            fecha_inicial_pr1 = datetime.strptime(fecha_inicial_pr, date_format_str)
+                            diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
+                            if diff_pr < 336.0:
+                                # Se hace la prediccion
+                                prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
+                                array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
+                                # Almacena el df con eventos unicamente en los puntos calientes
+                                fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
+                                file = open("fechas_prediccion.txt", "w")
+                                file.write(str(fecha_inicial_pr) + '\n')
+                                file.write(str(fecha_final_pr) + '\n')
+                                file.close()
+                                file = open("datos_validacion.txt", "w")
+                                file.write(str(fil[0]) + '\n')
+                                file.write(str(fil[1]) + '\n')
+                                file.close()
+                                print('Llegué aquí1')
+                                validation = sepp_mod.validation_model(fil[0], fil[1])
+                                print('Llegué aquí2')
+                                val = 100.0*fil[0]/fil[1]
+                                print('Llegué aquí3')
+                                summary = open(summary_file,"a")
+                                summary.write("Valor de validación: "+str(validation) +"\n")
+                                summary.close()
+                                print('Llegué aquí4')
+                            #    prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
                         #    array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                         #    fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
                         #    file = open("fechas_prediccion.txt", "w")
