@@ -225,7 +225,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                             datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[0]
                             log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
                             log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
-                            summary = open(summary_file,"a")
+                            summary = open(summary_file,"w")
                             summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
                             summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
                             file = open("fechas_entrenamiento.txt", "w")
@@ -247,29 +247,39 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                             date_format_str = '%Y-%m-%d %H:%M:%S'
                             fecha_final_tr1 = datetime.strptime(fecha_final_tr, date_format_str)
                             fecha_inicial_pr1 = datetime.strptime(fecha_inicial_pr, date_format_str)
-                            fecha_final_pr1 = datetime.strptime(fecha_final_pr, date_format_str)
                             diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
                             if diff_pr < 336.0:
                                 # Se hace la prediccion
-                                prediccion = sepp_model.predict_model(fecha_inicial_pr1, fecha_final_pr1)
-                                print('Llegué aquí1')
+                                prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
                                 array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
-                                print('Llegué aquí2')
                                 # Almacena el df con eventos unicamente en los puntos calientes
                                 fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
-                                print('Llegué aquí3')
-                                validation = sepp_mod.validation_model(fil[0], fil[1])
-                                print('Llegué aquí4')
                                 file = open("fechas_prediccion.txt", "w")
                                 file.write(str(fecha_inicial_pr) + '\n')
                                 file.write(str(fecha_final_pr) + '\n')
                                 file.close()
-                                val = fil[0]/fil[1]
-                                print('Llegué aquí5')
-                                summary = open(summary_file,"a")
-                                summary.write("Valor de validación: "+str(validation) +"\n")
-                                summary.close()
-                                print('Llegué aquí6')
+                                file = open("datos_validacion.txt", "w")
+                                file.write(str(fil[0]) + '\n')
+                                file.write(str(fil[1]) + '\n')
+                                file.close()
+                                print('Llegué aquí1')
+                                #array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
+                                #print('Llegué aquí2')
+                                # Almacena el df con eventos unicamente en los puntos calientes
+                                #fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
+                                #print('Llegué aquí3')
+                                #validation = sepp_mod.validation_model(fil[0], fil[1])
+                                #print('Llegué aquí4')
+                                #file = open("fechas_prediccion.txt", "w")
+                                #file.write(str(fecha_inicial_pr) + '\n')
+                                #file.write(str(fecha_final_pr) + '\n')
+                                #file.close()
+                                #val = fil[0]/fil[1]
+                                #print('Llegué aquí5')
+                                #summary = open(summary_file,"a")
+                                #summary.write("Valor de validación: "+str(validation) +"\n")
+                                #summary.close()
+                                #print('Llegué aquí6')
                         #else:
                     #    datos_eventos = gpd.read_file('eventos_covariados.geojson')
                         #    file = open("fechas_entrenamiento.txt", "w")
