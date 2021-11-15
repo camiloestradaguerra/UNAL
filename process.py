@@ -341,17 +341,21 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 # hace un procesamiento de datos entre las fechas seleccionadas, entrena el modelo con estas fechas
                 # y luego predice con las fechas ingresadas por el usuario
                 else:
+                    print('Llegué aquí_11')
                     filename = "datos_validacion.txt"
+                    print('Llegué aquí_22')
                     parametros = np.array([])
                     with open(filename) as f_obj:
                         for line in f_obj:
                             parametros = np.append(parametros, float(line.rstrip()))
+                    print(parametros)
+                    print('Llegué aqui_33')
                     val = 100*parametros[0]/parametros[1]
-                    print('Llegué aquí3')
+                    print('Llegué aquí_44')
                     summary = open(summary_file,"a")
                     summary.write("Valor de validación: "+str(val) +"\n")
                     summary.close()
-                    print('Llegué aquí4')
+                    print('Llegué aquí_55')
 
     except Exception as e:
         msg_error = "No se completó función process"
