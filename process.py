@@ -248,7 +248,6 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                             fecha_final_tr1 = datetime.strptime(fecha_final_tr, date_format_str)
                             fecha_inicial_pr1 = datetime.strptime(fecha_inicial_pr, date_format_str)
                             diff_pr = (fecha_inicial_pr1 - fecha_final_tr1).total_seconds()/3600
-                            print(diff_pr)
                             if diff_pr < 336.0:
                                 # Se hace la prediccion
                                 prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
@@ -263,20 +262,14 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                                 file.write(str(fil[0]) + '\n')
                                 file.write(str(fil[1]) + '\n')
                                 file.close()
-                                print('Llegué aquí1')
                                 array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
-                                print('Llegué aquí2')
                                 # Almacena el df con eventos unicamente en los puntos calientes
                                 fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
-                                print('Llegué aquí3')
                                 validation = sepp_mod.validation_model(fil[0], fil[1])
-                                print('Llegué aquí4')
                                 val = 100.0*fil[0]/fil[1]
-                                print('Llegué aquí5')
                                 summary = open(summary_file,"a")
                                 summary.write("Valor de validación: "+str(val) +"\n")
                                 summary.close()
-                                print('Llegué aquí6')
                         # Si SI hay un modelo ya previamente entrenado: Revisa si existe el archivo parametros_optimizados
                         # (NO). Luego revisa si están por lo menos los datos eventos_covariados, y si no estan, entonces
                         # hace un procesamiento de datos entre las fechas seleccionadas, entrena el modelo con estas fechas
@@ -320,42 +313,25 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                                 file.write(str(fil[0]) + '\n')
                                 file.write(str(fil[1]) + '\n')
                                 file.close()
-                                print('Llegué aquí1')
                                 validation = sepp_mod.validation_model(fil[0], fil[1])
-                                print('Llegué aquí2')
                                 val = 100.0*fil[0]/fil[1]
-                                print('Llegué aquí3')
                                 summary = open(summary_file,"a")
                                 summary.write("Valor de validación: "+str(val) +"\n")
                                 summary.close()
-                                print('Llegué aquí4')
-                            #    prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
-                        #    array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
-                        #    fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
-                        #    file = open("fechas_prediccion.txt", "w")
-                        #    file.write(str(fecha_inicial_pr) + '\n')
-                        #    file.write(str(fecha_final_pr) + '\n')
-                        #    file.close()
                 # Si SI hay un modelo ya previamente entrenado: Revisa si existe el archivo parametros_optimizados
                 # (NO). Luego revisa si están por lo menos los datos eventos_covariados, y si no estan, entonces
                 # hace un procesamiento de datos entre las fechas seleccionadas, entrena el modelo con estas fechas
                 # y luego predice con las fechas ingresadas por el usuario
                 else:
-                    print('Llegué aquí_11')
                     filename = "datos_validacion.txt"
-                    print('Llegué aquí_22')
                     parametros = np.array([])
                     with open(filename) as f_obj:
                         for line in f_obj:
                             parametros = np.append(parametros, float(line.rstrip()))
-                    print(parametros)
-                    print('Llegué aqui_33')
                     val = 100*parametros[0]/parametros[1]
-                    print('Llegué aquí_44')
                     summary = open(summary_file,"a")
                     summary.write("Valor de validación: "+str(val) +"\n")
                     summary.close()
-                    print('Llegué aquí_55')
 
     except Exception as e:
         msg_error = "No se completó función process"
