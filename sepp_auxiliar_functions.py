@@ -491,7 +491,7 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
         return txt[:19]
     
     #puntos_gdf_cells_4326['Fecha'] = puntos_gdf_cells_4326['Fecha'].map(FECHA_mod)
-    puntos_gdf_cells_4326['Fecha'] = puntos_gdf_cells_4326['Fecha'].map(without_milisecond)
+    #puntos_gdf_cells_4326['Fecha'] = puntos_gdf_cells_4326['Fecha'].map(without_milisecond)
     
     puntos_gdf_cells_4326.to_file("predicted_events.geojson", driver='GeoJSON')
     
