@@ -93,9 +93,10 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
             if os.path.exists('./parametros_optimizados.txt') == False:
                 # Lo mismo que para el proceso de entrenamiento
                 if os.path.exists('./eventos_covariados.geojson') == False:
-                    datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[0]
-                    log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
-                    log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
+                    preproc = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
+                    datos_eventos = preproc[0]
+                    log_datos_sin_limpiar = preproc[1]
+                    log_datos_limpios = preproc[2]
                     summary = open(summary_file,"w")
                     summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
                     summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
@@ -222,9 +223,10 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 if os.path.exists('./datos_validacion.txt') == False:
                     if os.path.exists('./parametros_optimizados.txt') == False:
                         if os.path.exists('./eventos_covariados.geojson') == False:
-                            datos_eventos = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[0]
-                            log_datos_sin_limpiar = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[1]
-                            log_datos_limpios = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)[2]
+                            preproc = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
+                            datos_eventos = preproc[0]
+                            log_datos_sin_limpiar = preproc[1]
+                            log_datos_limpios = preproc[2]
                             summary = open(summary_file,"w")
                             summary.write("Cantidad datos antes del proceso de limpieza: "+str(log_datos_sin_limpiar) +"\n")
                             summary.write("Cantidad datos después del proceso de limpieza: "+str(log_datos_limpios) +"\n")
