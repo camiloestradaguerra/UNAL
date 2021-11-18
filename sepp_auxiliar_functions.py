@@ -489,6 +489,8 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
         return txt.replace("T"," ")
     def without_milisecond(txt):
         return txt[:19]
+
+    print(type(puntos_gdf_cells_4326.Fecha.iloc[0]))
     #puntos_gdf_cells_4326_2 = puntos_gdf_cells_4326
     #puntos_gdf_cells_4326_2['Fecha'] = puntos_gdf_cells_4326_2['Fecha'].map(FECHA_mod)
     #puntos_gdf_cells_4326_2['Fecha'] = puntos_gdf_cells_4326_2['Fecha'].map(without_milisecond)
