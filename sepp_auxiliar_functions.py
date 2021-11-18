@@ -500,6 +500,7 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
     #date_format_str = '%Y-%m-%d %H:%M:%S'
     for i in range(0, len(puntos_gdf_cells_4326)):
         puntos_gdf_cells_4326['Fecha'].iloc[i] = str(puntos_gdf_cells_4326['Fecha'].iloc[i]).replace("T"," ")
+        puntos_gdf_cells_4326['Fecha'].iloc[i] = str(puntos_gdf_cells_4326['Fecha'].iloc[i])[:19]
     
 
         #puntos_gdf_cells_4326['Fecha'].iloc[i] = puntos_gdf_cells_4326['Fecha'].iloc[i].replace("T"," ")
