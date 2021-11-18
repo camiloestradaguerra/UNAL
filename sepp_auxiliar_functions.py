@@ -496,7 +496,9 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
     print(type(puntos_gdf_cells_4326.Fecha.iloc[0]))
     #puntos_gdf_cells_4326_2 = puntos_gdf_cells_4326
     puntos_gdf_cells_4326['Fecha'] = puntos_gdf_cells_4326['Fecha'].map(FECHA_mod)
-    puntos_gdf_cells_4326['Fecha'] = datetime.fromisoformat(puntos_gdf_cells_4326['Fecha'])
+    date_format_str = '%Y-%m-%d %H:%M:%S'
+    puntos_gdf_cells_4326['Fecha'] = datetime.strptime(puntos_gdf_cells_4326['Fecha'], date_format_str)
+    #puntos_gdf_cells_4326['Fecha'] = datetime.fromisoformat(puntos_gdf_cells_4326['Fecha'])
     #datetime. strptime(date_time_str
     #print(type(puntos_gdf_cells_4326_2.Fecha.iloc[0]))
 
