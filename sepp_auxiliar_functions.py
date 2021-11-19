@@ -518,8 +518,9 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
     #puntos_gdf_cells_4326_2['Fecha'] = puntos_gdf_cells_4326_2['Fecha'].map(without_milisecond)
     #print(type(puntos_gdf_cells_4326.Fecha.iloc[0]))
     print(puntos_gdf_cells_4326)
-    puntos_gdf_cells_4326.to_file("predicted_events.geojson", driver='GeoJSON')
-    
+    #puntos_gdf_cells_4326.to_file("predicted_events.geojson", driver='GeoJSON')
+    puntos_gdf_cells_4326.to_csv('predicted_events.csv', index=False)
+
     number_ev_pred_on_hotspots = np.array([])
     for i in range(0, len(array_cells_hotspots_tst_data_1_number_cell)):
         for j in range(0, len(array_cell_events_pred_sorted)):
