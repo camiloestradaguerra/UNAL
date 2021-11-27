@@ -17,7 +17,7 @@ def example2():
 
 def example3():
     print("Ejemplo para el proceso de entrenamiento")
-    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'train' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-06-31 23:59:59' ")
+    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'train' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-07 23:59:59' ")
 
 def example4():
     print("Ejemplo para el proceso de prediccion")
