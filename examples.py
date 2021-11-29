@@ -12,12 +12,12 @@ def example1():
     os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'poligonos_covariados' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-31 23:59:59' ")
 
 def example2():
-    print("Ejemplo para el procesamiento de los datos: Extracción de los datos de la API, limpieza y preparacion de los datos para el proceso entrenamiento")
+    print("Ejemplo para el procesamiento de los datos)
     os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'clean' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-02-07 23:59:59' ")
 
 def example3():
     print("Ejemplo para el proceso de entrenamiento")
-    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'train' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-07 23:59:59' ")
+    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'train' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-31 23:59:59' ")
 
 def example4():
     print("Ejemplo para el proceso de prediccion")
