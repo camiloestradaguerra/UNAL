@@ -25,6 +25,6 @@ def example4():
 
 def example5():
     print("Ejemplo para el proceso de validacion")
-    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'validation' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-02-21 23:59:59' "+ "--fecha_inicial_pr '2021-02-21 00:00:00' " + "--fecha_final_pr '2021-02-28 23:59:59' ")
+    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'validation' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-02-21 23:59:59' "+ "--fecha_inicial_pr '2021-02-22 00:00:00' " + "--fecha_final_pr '2021-02-28 23:59:59' ")
 
-example4()
+example5()
