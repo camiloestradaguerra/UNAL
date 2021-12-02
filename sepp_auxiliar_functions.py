@@ -494,7 +494,7 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
         return date.replace("T", " ") #.replace(".000Z", "")
 
     
-    print(type(str(puntos_gdf_cells_4326.Fecha.iloc[0])))
+    #print(type(str(puntos_gdf_cells_4326.Fecha.iloc[0])))
     #puntos_gdf_cells_4326_2 = puntos_gdf_cells_4326
     
     #date_format_str = '%Y-%m-%d %H:%M:%S'
