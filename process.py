@@ -332,7 +332,6 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                             parametros = np.append(parametros, float(line.rstrip()))
                     val = 100*parametros[0]/parametros[1]
                     summary = open(summary_file,"a")
-                    #print('Hola Mundo')
                     summary.write("Valor de validación: "+str(val) +"\n")
                     summary.close()
 

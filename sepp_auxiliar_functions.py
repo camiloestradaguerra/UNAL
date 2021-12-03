@@ -206,7 +206,7 @@ def cells_on_map(b1, h1):
         else:
             poligonos_df[column] = (poligonos_df[column]-poligonos_df[column].min())/(poligonos_df[column].max()-poligonos_df[column].min())
     poligonos_df['cells'] = np.arange(0, len(poligonos_df)).astype('int')    
-    print(poligonos_df.columns)
+    #print(poligonos_df.columns)
     poligonos_df.to_file("poligonos_covariados.geojson", driver='GeoJSON')
     
     return poligonos_df
@@ -517,7 +517,7 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
 
     #puntos_gdf_cells_4326_2['Fecha'] = puntos_gdf_cells_4326_2['Fecha'].map(without_milisecond)
     #print(type(puntos_gdf_cells_4326.Fecha.iloc[0]))
-    print(puntos_gdf_cells_4326)
+    #print(puntos_gdf_cells_4326)
     puntos_gdf_cells_4326.to_file("predicted_events.geojson", driver='GeoJSON')
     #puntos_gdf_cells_4326.to_csv('predicted_events.csv', index=False)
     number_ev_pred_on_hotspots = np.array([])
@@ -595,9 +595,9 @@ def prob(beta, omega, sigma2, tiempo_eventos, cov_norm_eventos_m, d2_ev):
     ndx = index_list(len(tiempo_eventos))                    # Lista de índices para totalizar por filas
     rdx = np.array([j for i in range(1, len(tiempo_eventos)) 
                 for j in range(i, len(tiempo_eventos))])
-    print(beta)
-    print(cov_norm_eventos_m.shape)
-    print(np.exp((cov_norm_eventos_m*beta).sum(axis=1)))
+    #print(beta)
+    #print(cov_norm_eventos_m.shape)
+    #print(np.exp((cov_norm_eventos_m*beta).sum(axis=1)))
     mu = np.array(np.exp((cov_norm_eventos_m*beta).sum(axis=1)))
     Gst = fnormalz * np.exp(invOmega*d_temp) * np.exp(invSigma2*d2_ev) 
     Gi  = [sum(Gst[ndx[i]]) for i in range(len(tiempo_eventos))]
@@ -726,7 +726,7 @@ def limpieza_datos(df):
     
             if result_ws != "Not found":
                 parsed_result = parse_address_ws(result_ws)
-                print(parsed_result)
+                #print(parsed_result)
                 if parsed_result["Dirección ingresada"] != address:
                     return "Error loading address"
                 else:            
