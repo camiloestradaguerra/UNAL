@@ -224,6 +224,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                     if os.path.exists('./parametros_optimizados.txt') == False:
                         if os.path.exists('./eventos_covariados.geojson') == False:
                             preproc = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
+                            print('Pasé por aqui')
                             datos_eventos = preproc[0]
                             log_datos_sin_limpiar = preproc[1]
                             log_datos_limpios = preproc[2]
