@@ -221,10 +221,12 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
             diff_val = (ts_ya - ts_fecha_final_val)
             if diff_val > 0:
                 if os.path.exists('./datos_validacion.txt') == False:
+                    print('Pasé por aqui1')
                     if os.path.exists('./parametros_optimizados.txt') == False:
+                        print('Pasé por aqui2')
                         if os.path.exists('./eventos_covariados.geojson') == False:
                             preproc = sepp_model.preprocdatos_model(fecha_inicial, fecha_final)
-                            print('Pasé por aqui')
+                            
                             datos_eventos = preproc[0]
                             log_datos_sin_limpiar = preproc[1]
                             log_datos_limpios = preproc[2]
