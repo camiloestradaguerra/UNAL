@@ -9,7 +9,7 @@ import pandas as pd
 from datetime import timedelta, datetime
 
 def get_token_acces():
-    print('Obteniendo token ...')
+    #print('Obteniendo token ...')
     token_response = requests.post(c.API_HOST + ':' + c.API_PORT + c.API_RELATIVE_PATH_TOKEN_ACCESS, data={'username' : c.API_USER, 'password' : c.API_PASSWORD})
     #print(token_response.json())
     token = token_response.json()["auth_token"]
@@ -51,6 +51,6 @@ def update_process_state(id_tipo_proceso, id_estado_ejecucion, token):
         #print(response.json())
         logging.debug("Actualización estado de proceso en el API realizada")
     except requests.exceptions.HTTPError as error:
-        print(error)
+        #print(error)
         traceback.print_exc()
         logging.debug("No se completo la actualización estado de proceso en el API")
