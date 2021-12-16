@@ -9,6 +9,10 @@ API_PASSWORD = 'Hadoop$'
 IP_EJECUCION = '192.168.3.1'
 USUARIO_EJECUCION = 'unal'
 PASSWORD = "Unal123"
+PATH_POSTGRES_JAR="/home/unal/modelo_rinas/UNAL/postgresql-42.2.23.jar"
+URL_POSTGRES="jdbc:postgresql://localhost:5432/"
+DATABASE_NAME = "analiticades"
+TABLE_NAME = "data_nuse_rinas"
 
 NAME_PREPROCESAMIENTO="PREPROCESAMIENTO"
 NAME_ENTRENAMIENTO="ENTRENAMIENTO"
@@ -20,8 +24,5 @@ ESTADO_ERROR="ERROR"
 ESTADO_PROCESO="EN PROCESO"
 ESTADO_CANCELADO="CANCELADO"
 
-PATH_POSTGRES_JAR="/home/unal/modelo_rinas/UNAL/postgresql-42.2.23.jar"
-URL_POSTGRES="jdbc:postgresql://localhost:5432/"
-DATABASE_NAME = "analiticades"
-TABLE_NAME = "data_nuse_rinas"
+
 
