@@ -23,7 +23,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
     try:
         locals_=locals()
         summary = open(summary_file,"w")
-        summary.write("Ejecución proceso modelo Percepción de Seguridad \n")
+        summary.write("Ejecución proceso modelo Riñas y Lesiones Personales \n")
         summary.write("Fecha: "+str(datetime.now())+"\n")
         summary.write("Variables de entrada: \n")
         for i in locals_:
