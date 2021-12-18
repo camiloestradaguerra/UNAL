@@ -9,13 +9,21 @@ import pandas as pd
 from datetime import timedelta, datetime
 
 def get_token_acces():
-    #print('Obteniendo token ...')
+    """
+    Obtiene un token para realizar operaciones en el API
+    :return: string token
+    """
     token_response = requests.post(c.API_HOST + ':' + c.API_PORT + c.API_RELATIVE_PATH_TOKEN_ACCESS, data={'username' : c.API_USER, 'password' : c.API_PASSWORD})
-    #print(token_response.json())
     token = token_response.json()["auth_token"]
     return token
 
 def get_tipos_proceso(token):
+    """
+    Obtiene la información de los tipos de proceso de la API
+ 
+    :param token: string token
+    :return: dict con keys los tipos de procesos y valores los ids en el API
+    """
     auth_header={'Authorization' : 'Token ' + token}
     response = requests.get(c.API_HOST + ':' + c.API_PORT + c.API_RELATIVE_PATH_GET_TIPOPROCESO, headers=auth_header)
     dict_response = response.json()
@@ -26,6 +34,12 @@ def get_tipos_proceso(token):
     return tipos_proceso
     
 def get_estados_ejecucion(token):
+    """
+    Obtiene la información de los estados de ejecución de la API
+ 
+    :param token: string token
+    :return: dict con keys los estados de procesos y valores los ids en el AP
+    """
     auth_header={'Authorization' : 'Token ' + token}
     response = requests.get(c.API_HOST + ':' + c.API_PORT + c.API_RELATIVE_PATH_GET_ESTADOEJECUCION, headers=auth_header)
     dict_response = response.json()
@@ -38,11 +52,17 @@ def get_estados_ejecucion(token):
 
 
 def update_process_state(id_tipo_proceso, id_estado_ejecucion, token):
-
+    """
+    Actualiza un estado de proceso
+ 
+    :param id_tipo_proceso: id del tipo de proceso a actualizar
+    :param id_estado_ejecucion: id del estado de ejecucion del proceso a actualizar
+    :param token: string token
+    :return:
+    """
     fecha_actual = datetime.now()
     time_stamp = fecha_actual.strftime('%Y-%m-%-d %H:%M:%S')
     auth_header={'Authorization' : 'Token ' + token}
-
     try:
         data = {'fecha_hora_proceso' : time_stamp, 'usuario_ejecucion' : c.USUARIO_EJECUCION, 'ip_ejecucion' : c.IP_EJECUCION, 'id_tipo_proceso' : id_tipo_proceso, 'id_estado_ejecucion' : id_estado_ejecucion}
         #print(data)
