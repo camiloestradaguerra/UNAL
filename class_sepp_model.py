@@ -162,7 +162,7 @@ class ModeloRinhas(ModeloBase):
                 data_eventos = data_eventos[['Lon','Lat','Time','Cell']]
                 posiciones = np.array(data_eventos[["Lon", "Lat"]])
                 cov_norm_cell_m = np.array(poligonos_df[['Promedio Estrato 2019','Area de Cuadrantes de Policia 2020','Comando de Atencion Inmediata','Estaciones Policia','Int']])
-                sp_factor = 20
+                sp_factor = 1
                 sq_dist = np.tril(np.sum((posiciones[:, np.newaxis, :] - posiciones[np.newaxis, :, :]) ** 2, axis = -1)*10e-7, -1)
                 tiempo_eventos = np.array(data_eventos.Time)
                 dif_tiempo = np.tril(tiempo_eventos[..., np.newaxis] - tiempo_eventos[np.newaxis, ...], -1)
