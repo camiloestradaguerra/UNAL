@@ -368,11 +368,11 @@ class ModeloRinhas(ModeloBase):
 
                 def simulate(window_size, k):
                     """
-                    Generates the background events with their descendant events in some window temporal size in one cell
-                    :param window_size: window temporal size
-                    :param k: number of cell
-                    :return puntos_gdf: dataframe with the simulated events
-                    :return array_cells_events_sim: two dimensional array with cell number and its corresponding number of events
+                    Generate los eventos de fondo con sus eventos descendiente en una ventana temporal para una celda
+                    :param window_size: tamaño de la ventana temporal
+                    :param k: número de celda
+                    :return puntos_gdf: dataframe con los eventos simulados
+                    :return array_cells_events_sim: arreglo bidimensional con el número de celda y su correspondiente número de eventos
                     """
                     backgrounds = sample_poisson_process_hom(window_size, mu[k])
                     backgrounds = backgrounds[:-1]

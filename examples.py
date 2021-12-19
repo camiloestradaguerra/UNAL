@@ -13,7 +13,7 @@ def example1():
 
 def example2():
     print("Ejemplo para el procesamiento de los datos")
-    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'clean' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-03-31 23:59:59' ")
+    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'clean' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-07 23:59:59' ")
 
 def example3():
     print("Ejemplo para el proceso de entrenamiento")
@@ -27,4 +27,4 @@ def example5():
     print("Ejemplo para el proceso de validacion")
     os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'validation' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-30 23:59:59' "+ "--fecha_inicial_pr '2021-01-31 00:00:00' " + "--fecha_final_pr '2021-01-31 23:59:59' ")
 
-example3()
+example2()
