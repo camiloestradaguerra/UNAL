@@ -230,15 +230,15 @@ class ModeloRinhas(ModeloBase):
     ##############
     def predict_model(self, fecha_inicial, fecha_final):
         """
-        Simulate events during a time
-        :param beta: weight for the covariates
-        :param omega: how much decay temporally the probability of triggering event
-        :param sigma2: how much spread the triggering effect from background event
-        :param number_hours = time for simulating events
-        :param poligonos_df = poligonos_df
-        :return puntos_gdf: points of the simulate events 
-        :return array_cells_events_sim: array of the simulated events and its cell number 
-        :return array_cells_events_data: array of the siedco data events and its cell number
+        Simula eventos durante un algún tiempo
+        :param beta: peso para los covariados
+        :param omega: factor de decamiento temporal de la probabilidad de un evento desencadenado
+        :param sigma2: factor de decamiento espacial de la probabilidad de un evento desencadenado
+        :param number_hours = tiempo para la simulación de eventos
+        :param poligonos_df = poligonos del mapa con sus covariados
+        :return puntos_gdf: eventos simulados 
+        :return array_cells_events_sim: arreglo de los eventos simulados y su número de celda
+        :return array_cells_events_data: arreglo de los eventos de NUSE y su número de celda
         """
         root_logger= logging.getLogger()
         root_logger.setLevel(logging.DEBUG) # or whatever
@@ -272,9 +272,10 @@ class ModeloRinhas(ModeloBase):
                 sigma = np.sqrt(sigma2)
                 def get_random_point_in_polygon_back(poly):
                     """
-                    Generates random background events inside a polygon
+                    Genera eventos de background dentro de un polígono
+                    :param poly: polígono donde se irán a generar los eventos
+                    :return p: punto generado
                     """
-                
                     minx, miny, maxx, maxy = poly.bounds
                     while True:
                         p = Point(random.uniform(minx, maxx), random.uniform(miny, maxy))
@@ -283,9 +284,9 @@ class ModeloRinhas(ModeloBase):
 
                 def get_random_point_in_polygon_trig(poly):
                     """
-                    Generates random triggering events inside a polygon
-                    :param poly: geometry of the polygon
-                    :return p: point inside of polygon
+                    Genera eventos descendientes dentro de un polígono
+                    :param poly: geometría del polígono
+                    :return p: punto generado
                     """
                 
                     while True:
@@ -297,11 +298,11 @@ class ModeloRinhas(ModeloBase):
 
                 def sort_with_causes(points, caused_by):
                     """
-                    Sorts events in time, and maintains caused by information
-                    :param points: array of events
-                    :parm caused_by: array with the number of the event that caused it
-                    :return events: sorted point array
-                    :return new_caused_by: sorted caused_by array
+                    Ordena los eventos respecto al tiempo, manteniendo la información de quién lo causo
+                    :param points: arreglo de eventos
+                    :parm caused_by: arreglo con el número del evento que lo causó
+                    :return events: arreglo de eventos ordenados
+                    :return new_caused_by: arreglo de quién fue el causante ya ordenado
                     """
                     # caused_by[i] = j<i if i caused by j, or i if i background
                     tagged = list(enumerate(points))
@@ -316,9 +317,9 @@ class ModeloRinhas(ModeloBase):
 
                 def simulate_sub_process(parent : Event, k):
                     """
-                    Generates the triggered events
-                    :param parent : Event: parent event
-                    :param k: number of cell where ocurred the event
+                    Genera eventos descecadenados
+                    :param parent : Event: evento padre
+                    :param k: número de celda donde ocurre el evento
                     """
                     points = []
                     t = 0
@@ -340,9 +341,9 @@ class ModeloRinhas(ModeloBase):
 
                 def _add_point(points, omega):
                     """
-                    Generates interarrival times between consecutive events and adds it to a list
-                    :param points: list of points
-                    :param mu: events rate for the cell
+                    Genera los tiempo entre llegada entre eventos consecutivos y los añade a una lista
+                    :param points: lista de eventos
+                    :param mu: tasa de eventos de fondon para las celdas 
                     """
             
                     wait_time = np.random.exponential(1/omega)
@@ -354,10 +355,10 @@ class ModeloRinhas(ModeloBase):
             
                 def sample_poisson_process_hom(window_size, omega):
                     """
-                    Generates the background events according to the background events rate in some window temporal size 
-                    :param window_size: window temporal size
-                    :param omega: background events rate
-                    :return points: simulated background points
+                    Genera eventos de fondo de acuerdo a la tasa de eventos de fondo para una ventana de tiempo
+                    :param window_size: tamaño de la ventana de tiempo
+                    :param omega: tasa de eventos de fondo
+                    :return points: eventos de fondo simulados
                     """
                     points = []
                     _add_point(points, omega)
