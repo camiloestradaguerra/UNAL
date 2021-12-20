@@ -414,7 +414,7 @@ class ModeloRinhas(ModeloBase):
                 all_events_sim = all_events_sim.reshape(int(len(all_events_sim)/3), 3)
                 print(all_events_sim)
                 puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y"])
-                puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y", ""])
+                #puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y", ""])
                 geometry = [Point(xy) for xy in zip(puntos_gdf['X'], puntos_gdf['Y'])]
                 crs = {'init': 'epsg:3857'}
                 puntos_gdf = gpd.GeoDataFrame(puntos_gdf, crs=crs, geometry=geometry)
