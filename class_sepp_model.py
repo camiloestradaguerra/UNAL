@@ -267,7 +267,7 @@ class ModeloRinhas(ModeloBase):
                 omega = parameters[5]
                 sigma2 = parameters[6] 
                 window_size = diff 
-                Event = namedtuple("Event", ["t", "loc_x", "loc_y"])
+                Event = namedtuple("Event", ["t", "loc_x", "loc_y", "celda"])
                 alpha = 1
                 sigma = np.sqrt(sigma2)
                 def get_random_point_in_polygon_back(poly):
