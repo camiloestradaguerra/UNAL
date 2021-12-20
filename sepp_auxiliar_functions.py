@@ -370,17 +370,14 @@ def new_omega1(omega, tiempo_eventos, diferencia_tiempos, T, p_ij, pte):
 
 def cov_join_events(gpd_events, poligonos_df_cov):
     """
-    Join dataframe of the events with the polygons with its covariates
-    
-    Input
-    par gpd_events: dataframe of the events (train_data for example)
-    par poligonos_df_cov: dataframe with the geometry of each polygons
-                      with the covariates associated to it.
-    Output
-    cov_norm_cell_m: array of covariates of each cell of grid
-    cov_norm_eventos_m: array of covariates of each cell of grid where occured the event
-    poligonos_df_cov: polygons with the covariates
-    gpd_events: dataframe with the events with the column "cells" and covariate of the cells
+    Une el dataframe de eventos con los poligonos con sus covariados
+
+    :par gpd_events: dataframe de los eventos (train_data por ejemplo)
+    :par poligonos_df_cov: dataframe con la geometría de cada polígono con los covariados asociados a este
+    :ret cov_norm_cell_m: arreglo de covariados de cada celda de la cuadrícula 
+    :ret cov_norm_eventos_m: arreglo de covariados de cada celda de la cuadrícula donde ocurrió el evento
+    :ret poligonos_df_cov: polígonos con los covariados
+    :ret gpd_events: dataframe  con los eventos y con la columna celdas y los covariados de las celdas
     """
     gpd_events['cells'] = ' ' 
     for i in range(0, len(poligonos_df_cov)):
@@ -480,7 +477,7 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
     length = math.ceil(len(array_cells_events_tst_data_1_cells)*percentage_area/100)
     array_cells_hotspots_tsts_data_1 = array_cells_events_tst_data_1_cells_sorted[:length]
     array_cells_hotspots_tst_data_1_number_cell = list(np.array(array_cells_hotspots_tsts_data_1)[:,0])
-    puntos_gdf_cells = cov_join_events(events_gpd_pred, poly)[3]
+    #puntos_gdf_cells = cov_join_events(events_gpd_pred, poly)[3]
     puntos_gdf_cells_4326 = events_gpd_pred.loc[events_gpd_pred['cells'].isin(array_cells_hotspots_tst_data_1_number_cell)].to_crs("EPSG:4326")
     puntos_gdf_cells_4326['TimeStamp'] = pd.to_datetime(puntos_gdf_cells_4326['TimeStamp'], unit='h',origin=pd.Timestamp(init_date))
     puntos_gdf_cells_4326 = puntos_gdf_cells_4326[['TimeStamp','geometry','Promedio Estrato 2019','Area de Cuadrantes de Policia 2020','Comando de Atencion Inmediata','Estaciones Policia']]
@@ -493,33 +490,11 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
     def FECHA_mod1(date):
         return date.replace("T", " ") #.replace(".000Z", "")
 
-    
-    #print(type(str(puntos_gdf_cells_4326.Fecha.iloc[0])))
-    #puntos_gdf_cells_4326_2 = puntos_gdf_cells_4326
-    
-    #date_format_str = '%Y-%m-%d %H:%M:%S'
     for i in range(0, len(puntos_gdf_cells_4326)):
         puntos_gdf_cells_4326['Fecha'].iloc[i] = str(puntos_gdf_cells_4326['Fecha'].iloc[i]).replace("T"," ")
         puntos_gdf_cells_4326['Fecha'].iloc[i] = str(puntos_gdf_cells_4326['Fecha'].iloc[i])[:19]
     
-
-        #puntos_gdf_cells_4326['Fecha'].iloc[i] = puntos_gdf_cells_4326['Fecha'].iloc[i].replace("T"," ")
-    #puntos_gdf_cells_4326['Fecha'] = puntos_gdf_cells_4326['Fecha'].map(FECHA_mod)
-
-    #print(type(puntos_gdf_cells_4326.Fecha.iloc[0]))
-
-    #    puntos_gdf_cells_4326['Fecha'].iloc[i] = datetime.utcfromtimestamp(puntos_gdf_cells_4326['Fecha'].iloc[i]).strftime('%Y-%m-%d %H:%M:%S')
-
-    #puntos_gdf_cells_4326['Fecha'] = datetime.strptime(puntos_gdf_cells_4326['Fecha'], date_format_str)
-    #puntos_gdf_cells_4326['Fecha'] = datetime.fromisoformat(puntos_gdf_cells_4326['Fecha'])
-    #datetime. strptime(date_time_str
-    #print(type(puntos_gdf_cells_4326_2.Fecha.iloc[0]))
-
-    #puntos_gdf_cells_4326_2['Fecha'] = puntos_gdf_cells_4326_2['Fecha'].map(without_milisecond)
-    #print(type(puntos_gdf_cells_4326.Fecha.iloc[0]))
-    #print(puntos_gdf_cells_4326)
     puntos_gdf_cells_4326.to_file("predicted_events.geojson", driver='GeoJSON')
-    #puntos_gdf_cells_4326.to_csv('predicted_events.csv', index=False)
     number_ev_pred_on_hotspots = np.array([])
     for i in range(0, len(array_cells_hotspots_tst_data_1_number_cell)):
         for j in range(0, len(array_cell_events_pred_sorted)):
