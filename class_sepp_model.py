@@ -418,6 +418,17 @@ class ModeloRinhas(ModeloBase):
                 
                 puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y", "Celda"])
                 puntos_gdf["Celda"] = puntos_gdf["Celda"].astype(int)
+                puntos_gdf["Promedio Estrato 2019"] = " "
+                puntos_gdf["Area de Cuadrantes de Policia 2020"] = " "
+                puntos_gdf["Comando de Atencion Inmediata"] = " " 
+                puntos_gdf["Estaciones Policia"] = " "
+                for i in range(0,len(puntos_gdf)):
+                    num_celda = puntos_gdf.Celda.iloc[i]
+                    puntos_gdf["Promedio Estrato 2019"].iloc[i] = poligonos_df["Promedio Estrato 2019"].iloc[num_celda]
+                    puntos_gdf["Area de Cuadrantes de Policia 2020"] = poligonos_df["Area de Cuadrantes de Policia 2020"].iloc[num_celda]
+                    puntos_gdf["Comando de Atencion Inmediata"] = poligonos_df["Comando de Atencion Inmediata"].iloc[num_celda]
+                    puntos_gdf["Estaciones Policia"] = poligonos_df["Estaciones Policia"].iloc[num_celda]
+                
                 geometry = [Point(xy) for xy in zip(puntos_gdf['X'], puntos_gdf['Y'])]
                 crs = {'init': 'epsg:3857'}
                 puntos_gdf = gpd.GeoDataFrame(puntos_gdf, crs=crs, geometry=geometry)
