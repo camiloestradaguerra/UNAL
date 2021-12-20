@@ -478,7 +478,7 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
     array_cells_hotspots_tsts_data_1 = array_cells_events_tst_data_1_cells_sorted[:length]
     array_cells_hotspots_tst_data_1_number_cell = list(np.array(array_cells_hotspots_tsts_data_1)[:,0])
     #puntos_gdf_cells = cov_join_events(events_gpd_pred, poly)[3]
-    puntos_gdf_cells_4326 = events_gpd_pred.loc[events_gpd_pred['cells'].isin(array_cells_hotspots_tst_data_1_number_cell)].to_crs("EPSG:4326")
+    puntos_gdf_cells_4326 = events_gpd_pred.loc[events_gpd_pred['Celdas'].isin(array_cells_hotspots_tst_data_1_number_cell)].to_crs("EPSG:4326")
     puntos_gdf_cells_4326['TimeStamp'] = pd.to_datetime(puntos_gdf_cells_4326['TimeStamp'], unit='h',origin=pd.Timestamp(init_date))
     puntos_gdf_cells_4326 = puntos_gdf_cells_4326[['TimeStamp','geometry','Promedio Estrato 2019','Area de Cuadrantes de Policia 2020','Comando de Atencion Inmediata','Estaciones Policia']]
     puntos_gdf_cells_4326 = puntos_gdf_cells_4326.rename(columns={'TimeStamp':'Fecha'})
