@@ -401,10 +401,11 @@ class ModeloRinhas(ModeloBase):
                 all_events_sim = np.array([])
 
                 mu = np.exp((beta*cov_norm_cell_m).sum(axis=1).astype(float))
-        
+
                 for k in range(0, len(cov_norm_cell_m)):
                     #random.seed(7)
                     ev = simulate(window_size, k)[0]
+                    print(ev)
                     # events of all cells
                     all_events_sim = np.append(all_events_sim, ev)
                     # number of event per cell
@@ -412,7 +413,7 @@ class ModeloRinhas(ModeloBase):
             
                 # simulated events on cells (number of events on each cell) (t,x,y) each event   
                 all_events_sim = all_events_sim.reshape(int(len(all_events_sim)/3), 3)
-                print(all_events_sim)
+                #print(all_events_sim)
                 puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y"])
                 #puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y", ""])
                 geometry = [Point(xy) for xy in zip(puntos_gdf['X'], puntos_gdf['Y'])]
