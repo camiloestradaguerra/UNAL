@@ -17,14 +17,14 @@ def example2():
 
 def example3():
     print("Ejemplo para el proceso de entrenamiento")
-    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'train' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-07 23:59:59' ")
+    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'train' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-31 23:59:59' ")
 
 def example4():
     print("Ejemplo para el proceso de prediccion")
-    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'predict' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-07 23:59:59' " + "--fecha_inicial_pr '2021-01-08 00:00:00' " + "--fecha_final_pr '2021-01-08 23:59:59' ")
+    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'predict' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-31 23:59:59' " + "--fecha_inicial_pr '2021-02-01 00:00:00' " + "--fecha_final_pr '2021-02-01 23:59:59' ")
 
 def example5():
     print("Ejemplo para el proceso de validacion")
     os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'validation' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-30 23:59:59' "+ "--fecha_inicial_pr '2021-01-31 00:00:00' " + "--fecha_final_pr '2021-01-31 23:59:59' ")
 
-example3()
+example4()
