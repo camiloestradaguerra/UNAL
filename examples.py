@@ -21,7 +21,7 @@ def example3():
 
 def example4():
     print("Ejemplo para el proceso de prediccion")
-    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'predict' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-07 23:59:59' " + "--fecha_inicial_pr '2021-01-08 00:00:00' " + "--fecha_final_pr '2021-01-08 04:59:59' ")
+    os.system("python process.py " + "--log_file 'example_log.log' " + "--summary_file 'example_summary.log' " + "--subprocess 'predict' " + "--fecha_inicial '2021-01-01 00:00:00' " + "--fecha_final '2021-01-07 23:59:59' " + "--fecha_inicial_pr '2021-01-08 00:00:00' " + "--fecha_final_pr '2021-01-08 12:59:59' ")
 
 def example5():
     print("Ejemplo para el proceso de validacion")
