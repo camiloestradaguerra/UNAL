@@ -415,14 +415,14 @@ class ModeloRinhas(ModeloBase):
                 
                 # simulated events on cells (number of events on each cell) (t,x,y) each event   
                 all_events_sim = all_events_sim.reshape(int(len(all_events_sim)/4), 4)
-                print(all_events_sim)
+                
                 puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y", "Celda"])
                 
                 geometry = [Point(xy) for xy in zip(puntos_gdf['X'], puntos_gdf['Y'])]
                 crs = {'init': 'epsg:3857'}
                 puntos_gdf = gpd.GeoDataFrame(puntos_gdf, crs=crs, geometry=geometry)
                 puntos_gdf = puntos_gdf.sort_values('TimeStamp').reset_index().drop(columns = 'index')
-            
+                print(puntos_gdf)
                 array_cells_events_sim = np.arange(0, len(events_sim_on_cells), 1).tolist()
                 array_cells_events_sim = list(map(list,zip(array_cells_events_sim,events_sim_on_cells)))
 
