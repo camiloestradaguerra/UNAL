@@ -223,7 +223,6 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
             ts_ya = datetime.timestamp(ya)
             ts_fecha_final_val = datetime.timestamp(fecha_final_val)
             diff_val = (ts_ya - ts_fecha_final_val)
-            print(diff_val)
             if diff_val > 0:
                 if os.path.exists('./datos_validacion.txt') == False:
                     print('Pasé por aqui1')
