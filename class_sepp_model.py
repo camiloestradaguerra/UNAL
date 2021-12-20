@@ -337,7 +337,7 @@ class ModeloRinhas(ModeloBase):
                         p = get_random_point_in_polygon_trig(poligonos_df.geometry[k])
                         loc_x = p.x
                         loc_y = p.y
-                        points.append(Event(parent.t + np.log(alpha/abs(alpha-t*omega))/omega , loc_x, loc_y))
+                        points.append(Event(parent.t + np.log(alpha/abs(alpha-t*omega))/omega , loc_x, loc_y, k))
 
                 def _add_point(points, omega):
                     """
