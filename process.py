@@ -335,12 +335,11 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 else:
                     print('----')
                     filename = "datos_validacion.txt"
-                    print(filename)
-                    parametros = np.array([])
+                    parametros_val = np.array([])
                     with open(filename) as f_obj:
                         for line in f_obj:
-                            parametros = np.append(parametros, float(line.rstrip()))
-                    val = 100*parametros[0]/parametros[1]
+                            parametros_val = np.append(parametros_val, float(line.rstrip()))
+                    val = 100*parametros_val[0]/parametros_val[1]
                     summary = open(summary_file,"a")
                     summary.write("Valor de validación: "+str(val) +"\n")
                     summary.close()
