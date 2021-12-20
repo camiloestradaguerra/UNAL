@@ -403,7 +403,7 @@ class ModeloRinhas(ModeloBase):
                 mu = np.exp((beta*cov_norm_cell_m).sum(axis=1).astype(float))
 
                 for k in range(0, len(cov_norm_cell_m)):
-                    #random.seed(7)
+                    random.seed(7)
                     ev = simulate(window_size, k)[0]
                     print(ev, k)
                     # events of all cells
