@@ -433,10 +433,10 @@ class ModeloRinhas(ModeloBase):
                 crs = {'init': 'epsg:3857'}
                 puntos_gdf = gpd.GeoDataFrame(puntos_gdf, crs=crs, geometry=geometry)
                 puntos_gdf = puntos_gdf.sort_values('TimeStamp').reset_index().drop(columns = 'index')
-                print(puntos_gdf)
                 array_cells_events_sim = np.arange(0, len(events_sim_on_cells), 1).tolist()
                 array_cells_events_sim = list(map(list,zip(array_cells_events_sim,events_sim_on_cells)))
-
+                print(array_cells_events_sim)
+                
                 logging.debug("Termina la prediccion para el modelo de rinas de seguridad.")
                 update_process_state(self.tipos_proceso[NAME_PREDICCION], self.estados_ejecucion[ESTADO_EXITO], get_token_acces())
                 return puntos_gdf, array_cells_events_sim

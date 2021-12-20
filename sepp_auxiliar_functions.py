@@ -471,8 +471,8 @@ def arr_cells_events_data(array_data_events, array_cells_events_sim):
 ###################################################################
 
 def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim_array_pred_cell, events_gpd_pred, init_date):
-    # array of tst_data_1_cells SORTED
     poly = gpd.read_file('poligonos_covariados.geojson')
+    # array of tst_data_1_cells SORTED
     array_cells_events_tst_data_1_cells_sorted = sorted(array_cells_events_tst_data_1_cells, key=lambda x: x[1], reverse=True)
     # array of two_dim_array_pred_cell SORTED
     array_cell_events_pred_sorted = sorted(two_dim_array_pred_cell, key=lambda x: x[1], reverse=True)
