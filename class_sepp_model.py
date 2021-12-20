@@ -417,7 +417,7 @@ class ModeloRinhas(ModeloBase):
                 all_events_sim = all_events_sim.reshape(int(len(all_events_sim)/4), 4)
                 
                 puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y", "Celda"])
-                
+                puntos_gdf["Celda"] = puntos_gdf["Celda"].astype(int)
                 geometry = [Point(xy) for xy in zip(puntos_gdf['X'], puntos_gdf['Y'])]
                 crs = {'init': 'epsg:3857'}
                 puntos_gdf = gpd.GeoDataFrame(puntos_gdf, crs=crs, geometry=geometry)
@@ -428,7 +428,7 @@ class ModeloRinhas(ModeloBase):
 
                 logging.debug("Termina la prediccion para el modelo de rinas de seguridad.")
                 update_process_state(self.tipos_proceso[NAME_PREDICCION], self.estados_ejecucion[ESTADO_EXITO], get_token_acces())
-                return puntos_gdf , array_cells_events_sim
+                return puntos_gdf, array_cells_events_sim
 
         except Exception as e:
             update_process_state(self.tipos_proceso[NAME_PREDICCION], self.estados_ejecucion[ESTADO_ERROR], get_token_acces())
