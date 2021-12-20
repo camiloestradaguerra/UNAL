@@ -405,12 +405,13 @@ class ModeloRinhas(ModeloBase):
                 for k in range(0, len(cov_norm_cell_m)):
                     #random.seed(7)
                     ev = simulate(window_size, k)[0]
+                    print(ev)
                     # events of all cells
                     all_events_sim = np.append(all_events_sim, ev)
                     # number of event per cell
                     events_sim_on_cells = np.array(np.append(events_sim_on_cells, len(ev)),int)
                 
-                print(simulate(window_size, 1245)[0])
+                
                 # simulated events on cells (number of events on each cell) (t,x,y) each event   
                 all_events_sim = all_events_sim.reshape(int(len(all_events_sim)/3), 3)
                 #print(all_events_sim)
