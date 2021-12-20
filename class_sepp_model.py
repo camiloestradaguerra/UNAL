@@ -408,7 +408,6 @@ class ModeloRinhas(ModeloBase):
                     #print(ev)
                     # events of all cells
                     all_events_sim = np.append(all_events_sim, ev)
-                    print(all_events_sim)
                     # number of event per cell
                     events_sim_on_cells = np.array(np.append(events_sim_on_cells, len(ev)),int)
                 
@@ -436,7 +435,7 @@ class ModeloRinhas(ModeloBase):
                 array_cells_events_sim = np.arange(0, len(events_sim_on_cells), 1).tolist()
                 array_cells_events_sim = list(map(list,zip(array_cells_events_sim,events_sim_on_cells)))
                 print(array_cells_events_sim)
-                
+
                 logging.debug("Termina la prediccion para el modelo de rinas de seguridad.")
                 update_process_state(self.tipos_proceso[NAME_PREDICCION], self.estados_ejecucion[ESTADO_EXITO], get_token_acces())
                 return puntos_gdf, array_cells_events_sim
