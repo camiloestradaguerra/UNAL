@@ -396,7 +396,9 @@ class ModeloRinhas(ModeloBase):
                                 to_process.append((len(points) - 1,event))
                     points, caused_by = sort_with_causes(points, caused_by)
                     return points, backgrounds, caused_by
-
+                
+                print(simulate(window_size, 1245))
+                
                 events_sim_on_cells = np.array([])
                 all_events_sim = np.array([])
 
