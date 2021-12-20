@@ -58,7 +58,6 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 file.write(str(fecha_inicial) + '\n')
                 file.write(str(fecha_final) + '\n')
                 file.close()
-                print('-----')
                 # Entrena el modelo y crea un archivo con los parametros optimizados
                 parametros_opt = sepp_model.train_model(datos_eventos)
                 with open(summary_file,"a") as summary:
@@ -71,6 +70,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
             else:
                 # Lee los el df con los datos
                 datos_eventos = gpd.read_file('eventos_covariados.geojson')
+                print(datos_eventos)
                 # Crea el archivo externo con las fechas inicial y final de los datos
                 def FECHA_mod(txt):
                     return txt.replace("T"," ")
