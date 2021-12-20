@@ -413,19 +413,19 @@ class ModeloRinhas(ModeloBase):
                 # simulated events on cells (number of events on each cell) (t,x,y) each event   
                 all_events_sim = all_events_sim.reshape(int(len(all_events_sim)/3), 3)
                 print(all_events_sim)
-                #puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y"])
+                puntos_gdf = gpd.GeoDataFrame(all_events_sim, columns=["TimeStamp", "X", "Y"])
                 
-                #geometry = [Point(xy) for xy in zip(puntos_gdf['X'], puntos_gdf['Y'])]
-                #crs = {'init': 'epsg:3857'}
-                #puntos_gdf = gpd.GeoDataFrame(puntos_gdf, crs=crs, geometry=geometry)
-                #puntos_gdf = puntos_gdf.sort_values('TimeStamp').reset_index().drop(columns = 'index')
+                geometry = [Point(xy) for xy in zip(puntos_gdf['X'], puntos_gdf['Y'])]
+                crs = {'init': 'epsg:3857'}
+                puntos_gdf = gpd.GeoDataFrame(puntos_gdf, crs=crs, geometry=geometry)
+                puntos_gdf = puntos_gdf.sort_values('TimeStamp').reset_index().drop(columns = 'index')
             
-                #array_cells_events_sim = np.arange(0, len(events_sim_on_cells), 1).tolist()
-                #array_cells_events_sim = list(map(list,zip(array_cells_events_sim,events_sim_on_cells)))
+                array_cells_events_sim = np.arange(0, len(events_sim_on_cells), 1).tolist()
+                array_cells_events_sim = list(map(list,zip(array_cells_events_sim,events_sim_on_cells)))
 
                 logging.debug("Termina la prediccion para el modelo de rinas de seguridad.")
                 update_process_state(self.tipos_proceso[NAME_PREDICCION], self.estados_ejecucion[ESTADO_EXITO], get_token_acces())
-                #return puntos_gdf, array_cells_events_sim
+                return puntos_gdf, array_cells_events_sim
 
         except Exception as e:
             update_process_state(self.tipos_proceso[NAME_PREDICCION], self.estados_ejecucion[ESTADO_ERROR], get_token_acces())
