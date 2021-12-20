@@ -406,7 +406,7 @@ class ModeloRinhas(ModeloBase):
                     random.seed(7)
                     ev = simulate(window_size, k)[0]
                     # events of all cells
-                    all_events_sim = np.append(all_events_sim, ev)
+                    all_events_sim = np.append(all_events_sim, [ev,k])
                     print(all_events_sim)
                     # number of event per cell
                     events_sim_on_cells = np.array(np.append(events_sim_on_cells, len(ev)),int)
