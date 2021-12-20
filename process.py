@@ -333,7 +333,6 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 # hace un procesamiento de datos entre las fechas seleccionadas, entrena el modelo con estas fechas
                 # y luego predice con las fechas ingresadas por el usuario
                 else:
-                    print('----')
                     filename = "datos_validacion.txt"
                     parametros_val = np.array([])
                     with open(filename) as f_obj:
