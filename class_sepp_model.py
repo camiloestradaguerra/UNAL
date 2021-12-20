@@ -382,7 +382,7 @@ class ModeloRinhas(ModeloBase):
                         p = get_random_point_in_polygon_back(poligonos_df.geometry[k])
                         px = p.x
                         py = p.y
-                        st_point = Event(t, px, py)
+                        st_point = Event(t, px, py, k)
                         points.append(st_point)
                     backgrounds = points    
                     caused_by = [ i for i in range(len(points))]
@@ -403,8 +403,9 @@ class ModeloRinhas(ModeloBase):
                 mu = np.exp((beta*cov_norm_cell_m).sum(axis=1).astype(float))
 
                 for k in range(0, len(cov_norm_cell_m)):
-                    random.seed(7)
+                    #random.seed(7)
                     ev = simulate(window_size, k)[0]
+                    print(all_events_sim)
                     # events of all cells
                     all_events_sim = np.append(all_events_sim, ev)
                     #print(all_events_sim)
