@@ -483,7 +483,7 @@ def filtering_data(percentage_area, array_cells_events_tst_data_1_cells, two_dim
     puntos_gdf_cells = cov_join_events(events_gpd_pred, poly)[3]
     puntos_gdf_cells_4326 = events_gpd_pred.loc[events_gpd_pred['cells'].isin(array_cells_hotspots_tst_data_1_number_cell)].to_crs("EPSG:4326")
     puntos_gdf_cells_4326['TimeStamp'] = pd.to_datetime(puntos_gdf_cells_4326['TimeStamp'], unit='h',origin=pd.Timestamp(init_date))
-    puntos_gdf_cells_4326 = puntos_gdf_cells_4326[['TimeStamp','geometry']]
+    puntos_gdf_cells_4326 = puntos_gdf_cells_4326[['TimeStamp','geometry','Promedio Estrato 2019','Area de Cuadrantes de Policia 2020','Comando de Atencion Inmediata','Estaciones Policia']]
     puntos_gdf_cells_4326 = puntos_gdf_cells_4326.rename(columns={'TimeStamp':'Fecha'})
     #puntos_gdf_cells_4326['Fecha'] = puntos_gdf_cells_4326['Fecha'].to_pydatetime()
     def FECHA_mod(txt):
