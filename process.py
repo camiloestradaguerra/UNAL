@@ -81,12 +81,12 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 file.close()
                 # Entrena el modelo con los datos y crea un archivo con los parametros optimizados
                 parametros_opt = sepp_model.train_model(datos_eventos)
-                print(sepp_model.train_model(datos_eventos))
-                #summary = open(summary_file,"a+")
-                #summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
-                #summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
-                #summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
-                #summary.close()
+                #print(sepp_model.train_model(datos_eventos))
+                summary = open(summary_file,"a+")
+                summary.write("Parámetro beta optimizado: "+str(parametros_opt[0]) +"\n")
+                summary.write("Parámetro omega optimizado: "+str(parametros_opt[1]) +"\n")
+                summary.write("Parámetro sigma cuadrado optimizado: "+str(parametros_opt[2]) +"\n")
+                summary.close()
         
         elif subprocess == "predict":
             # Si NO hay un modelo ya previamente entrenado: Revisa si existe el archivo parametros_optimizados

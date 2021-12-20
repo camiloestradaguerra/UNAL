@@ -151,7 +151,7 @@ class ModeloRinhas(ModeloBase):
         update_process_state(self.tipos_proceso[NAME_ENTRENAMIENTO], self.estados_ejecucion[ESTADO_PROCESO], get_token_acces())
         
         try:
-            if len(data_eventos) > 1000 and len(data_eventos) <= 150000:
+            if len(data_eventos) > 10 and len(data_eventos) <= 150000:
                 poligonos_df = gpd.read_file('poligonos_covariados.geojson') 
                 def FECHA_mod(txt):
                     return txt.replace("T"," ")
