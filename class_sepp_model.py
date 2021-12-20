@@ -408,7 +408,7 @@ class ModeloRinhas(ModeloBase):
                     # events of all cells
                     all_events_sim = np.append(all_events_sim, ev)
                     # number of event per cell
-                    events_sim_on_cells = np.array(np.append(events_sim_on_cells, len(ev)),int,k)
+                    events_sim_on_cells = np.array(np.append(events_sim_on_cells, len(ev)),int)
 
                 # simulated events on cells (number of events on each cell) (t,x,y) each event   
                 all_events_sim = all_events_sim.reshape(int(len(all_events_sim)/3), 3)
