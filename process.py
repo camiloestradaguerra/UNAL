@@ -335,6 +335,7 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 else:
                     print('----')
                     filename = "datos_validacion.txt"
+                    print(filename)
                     parametros = np.array([])
                     with open(filename) as f_obj:
                         for line in f_obj:
