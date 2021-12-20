@@ -199,17 +199,17 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                 if diff_pr < 336.0:
                     # Se hace la prediccion
                     prediccion = sepp_model.predict_model(fecha_inicial_pr, fecha_final_pr)
-                    array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
+                    #array_cells_events_tst_data_cells = arr_cells_events_data(datos_eventos, prediccion[1]) 
                     # Almacena el df con eventos unicamente en los puntos calientes
-                    fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
-                    file = open("fechas_prediccion.txt", "w")
-                    file.write(str(fecha_inicial_pr) + '\n')
-                    file.write(str(fecha_final_pr) + '\n')
-                    file.close()
-                    file = open("datos_validacion.txt", "w")
-                    file.write(str(fil[0]) + '\n')
-                    file.write(str(fil[1]) + '\n')
-                    file.close()
+                    #fil = filtering_data(20, array_cells_events_tst_data_cells, prediccion[1], prediccion[0], fecha_inicial_pr)            
+                    #file = open("fechas_prediccion.txt", "w")
+                    #file.write(str(fecha_inicial_pr) + '\n')
+                    #file.write(str(fecha_final_pr) + '\n')
+                    #file.close()
+                    #file = open("datos_validacion.txt", "w")
+                    #file.write(str(fil[0]) + '\n')
+                    #file.write(str(fil[1]) + '\n')
+                    #file.close()
                     
 
         elif subprocess == "validation":
