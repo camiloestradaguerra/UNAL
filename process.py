@@ -142,8 +142,10 @@ def process(log_file, summary_file, sub_process, fecha_inicial, fecha_final, fec
                     file = open("fechas_entrenamiento.txt", "w")
                     def FECHA_mod(txt):
                         return txt.replace("T"," ")
-                    file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
-                    file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
+                    #file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[0])) + '\n')
+                    #file.write(FECHA_mod(str(datos_eventos.FECHA.iloc[-1])) + '\n')
+                    file.write(str(fecha_inicial) + '\n')
+                    file.write(str(fecha_final) + '\n')
                     file.close()
                     parametros_opt = sepp_model.train_model(datos_eventos)
                     with open(summary_file,"a") as summary:
